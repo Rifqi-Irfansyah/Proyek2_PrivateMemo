@@ -4,9 +4,9 @@
 using namespace std;
 
 void readMemoFile(const char* filename, Memo& memo) {
-    ifstream file(filename, MEMO_READER_H);
+    ifstream file(filename, binary);
     if (!file.is_open()) {
-        cerr << "Gagal Membuka File: " << filename << endl;
+        cerr << "Gagal Membuka Memo: " << filename << endl;
         return;
     }
 
