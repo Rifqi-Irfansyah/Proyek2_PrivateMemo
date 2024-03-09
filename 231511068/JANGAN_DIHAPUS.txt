@@ -1,0 +1,11 @@
+Edited by RIFQI IRFANSYAH Edited by ALQAN Nazra Edited by DIO
+
+(Dalam menambahkan git hub step-step
+
+ketikan perintah pada terminal vscode "git clone [link dari git tersebut (dapat dicari pada <> code)]"
+setelah tertulis kata cloning into 'nama file',ketika perintah "git pull" hingga keluar Already up to date
+lalu lakukan perubahan pada file yang akan diubah contohnya pada file README.md
+setelah melakukan perubahan maka langsung lakukan "git add [nama file]"
+setelah itu lalu ketik kan "git commit -m 'pesan apapun'"
+setelah keluar tulisan [master (bebas)] 'pesan apapun'
+ketikan "git push" untuk dapat dipush pada git bersama )
