@@ -1,20 +1,23 @@
 #include <iostream>
+#include "../231511072/231511072.h"
 using namespace std;
 
-void listMemo(struct memo)
-string dekripsi(string cipher_text)
+string dekripsi(string cipher_text);
 void cekPassword(int pilih_memo, string pw);
 
-void listMemo(struct memo) {
+int main() {
+    readMemoFile(); //dari modul berlin (072)
+
     int pilih_memo;
+    char kembali;
     bool validasi = false;
+    int total_records = sizeof(readMemo) / sizeof(Memo);
 
-
-    cout << "List Memo yang Tersimpan:"<<endl;
-    for (int i=1; i<=){
+    cout << "List Memo yang Tersimpan:" <<endl;
+    for (int i=1; i<=total_records; i++){
         cout << "Memo ke-" << i <<endl;
         cout << "Judul Memo  = ";
-        cin >> memo[i].nama <<endl<<endl;
+        cin >> memo[i].namaMemo <<endl<<endl;
     }
     cout << "Pilih memo yg ingin dibuka = ";
     cin >> pilih_memo;
@@ -27,6 +30,7 @@ void listMemo(struct memo) {
     }
     else{
         cout << "Kembali (y)? ";
+        cin >> kembali;
         if (kembali == 'y'){
             void listMemo(struct memo);
         }
