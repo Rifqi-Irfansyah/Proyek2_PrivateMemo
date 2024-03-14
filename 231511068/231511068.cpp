@@ -1,89 +1,132 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include "231511068.h"
+/*
+P = Banyak  Bilangan [Harus prima saat diimput]
+Q = Banyak Bilangan [Harus prima saat diimput]
+N = P x Q
+R = (P - 1)(Q -1)
+E = 3,5,17,65537
+D = E^-1 mod(r)
 
-int checkPrime(int n) {
-	int i;
-	int m = n / 2;
-	
-	for (i = 2; i <= m; i++) {
-		if (n % i == 0) {
-			return 0; // Not Prime
-		}
-	}
+k = merupakan variabel temp atau variabel kosong yang tidak termasuk dalam global var 
+digunakan untuk dapat meminimalisir terjadinya multipel pernytaan variabel
 
-	return 1; // Prime
+Peraturan Definisi
+Array input itu Array [1][j]
+*/
+
+  long int p, q, n, t, cekinputprima, e[100][100], d[100][100], temp[100][100], j, pass[100][100], enkripsi[100][100], i;
+  char password[100][100];
+
+  int cekprim (long int prima)
+{
+    int i;
+    long int j = sqrt(prima);
+    for (i = 2; i <= j; i++)
+    {
+        if (prima % i == 0)
+        {
+            return 0;
+        }
+    }
+    return 1;
 }
 
-int findGCD(int n1, int n2) {
-	int i, gcd;
+void bagE (long int cekinputprima)
+{
+    int k,l;
+    k = 0;
+    l = 0;
+    for (i = 2; i < t;i++)
+    {
+        // if (t % i == 0) /*Task ini digunakan untuk melanjutkan loop dari yang diinginkan agar 0 tidak dimasukkan pada saat nanti operasi array*/ 
+        // {
+        //     continue;
+        // }
+        cekinputprima = cekprim(i);
+        if (cekinputprima == 1 && i != p && i != q)
+        {
+            e[k][l] = i;
+            cekinputprima = bagianD(enkripsi[k][l]);
+            if (cekinputprima > 0)
+            {
+                d[k][l] = cekinputprima;
+                k++;
+            }
+        }
+        
 
-	for(i = 1; i <= n1 && i <= n2; ++i) {
-		if(n1 % i == 0 && n2 % i == 0)
-			gcd = i;
-	}
-
-	return gcd;
+    }
 }
 
-int powMod(int a, int b, int n) {
-	long long x = 1, y = a;
-
-	while (b > 0) {
-		if (b % 2 == 1)
-			x = (x * y) % n;
-		y = (y * y) % n; // Squaring the base
-		b /= 2;
-	}
-
-	return x % n;
+long int bagianD(long int x) // Membuat  modular D
+{
+    long int k = 1;   
+    while (1)
+    {
+        k = k + t;
+        if (k % x ==0)
+        {
+            return (k/x);
+        }
+    }
 }
 
-int main(int argc, char* argv[]) {
-	int p, q;
-	int n, phin;
 
-	int data, cipher, decrypt;
-
-	while (1) {
-		printf("Enter any two prime numbers: ");
-		scanf("%d %d", &p, &q);
-
-		if (!(checkPrime(p) && checkPrime(q)))
-			printf("Both numbers are not prime. Please enter prime numbers only...\n");
-		else if (!checkPrime(p))
-			printf("The first prime number you entered is not prime, please try again...\n");
-		else if (!checkPrime(q))
-			printf("The second prime number you entered is not prime, please try again...\n");
-		else
-			break;
-	}
-	
-	n = p * q;
-
-	phin = (p - 1) * (q - 1);
-
-	int e = 0;
-	for (e = 5; e <= 100; e++) {
-		if (findGCD(phin, e) == 1)
-			break;
-	}
-	
-	int d = 0;
-	for (d = e + 1; d <= 100; d++) {
-		if ( ((d * e) % phin) == 1)
-			break;
-	}
-
-	printf("Value of e: %d\nValue of d: %d\n", e, d);
-
-	printf("Enter some numerical data: ");
-	scanf("%d", &data);
-
-	cipher = powMod(data, e, n);
-	printf("The cipher text is: %d\n", cipher);
-
-	decrypt = powMod(cipher, d, n);
-	printf("The decrypted text is: %d\n", decrypt);
-	return 0;
+void encrypt(long int pass[][100])
+{
+    long int pastukar, ct, kunci = e[0][0], k,len;
+    int i = 0, j = 0;
+    int panstring = strlen(password[0]); // Panjang string pada posisi pada array password[] merupakan posisi baris array
+    while (i != panstring) 
+    {
+        pastukar = password[i][j];
+        pastukar = pastukar - 96;
+        k = 1;
+        for (j = 0; j < kunci; j++) {
+            k = k * pastukar;
+            k = k % n;
+        }
+        temp[i][j] = k;
+        ct = k + 96;
+        enkripsi[i][j] = ct;
+        i++;
+    }
+    enkripsi[1][0]= -1;
+    printf ("\n Password sudah dienkripsi");
+//     for (i = 0; enkripsi[i][0] != -1; i++) // Menggunakan en[i][0] != -1 sebagai kondisi loop
+//         printf("%c", enkripsi[i][0]);
 }
+ 
+
+
+
+//  int main ()
+//  {
+//     printf ("Angka dengan minimal diatas dari 2\n");
+//     printf ("Masukkan Angka Prima Pertama: ");
+//     scanf ("%ld",&p);
+//     cekinputprima = cekprim(p);
+//     if (cekinputprima == 0)
+//     {
+//         printf ("Input mengalami error// tidak prima");
+//         exit(1);
+//     }
+//     printf ("Angka dengan minimal diatas dari 1\n");
+//     printf ("Masukkan angka Prima kedua: ");
+//     scanf ("%ld",&q);
+//     cekinputprima = cekprim(q);
+//     if (cekinputprima == 0 || p == q)
+//     {
+//         printf ("Input mengalami error/ TIdak prima");
+//         exit (1);
+//     }
+//     printf ("Masukkan Password yang akan digunakan");
+//     fflush(stdin);
+//     scanf("%s",password);
+
+
+
+
+// }
+
+
