@@ -24,23 +24,37 @@
 #include <fstream>
 #include "231511072.h"
 
-void readMemoFile(const char* filename, Memo& memo) {
-    ifstream file(filename, ios::binary);
-
-    if (file.is_open()) {
-        file.read(reinterpret_cast<char*>(&memo), sizeof(Memo));
-        file.close();
-
-        cout << "Nama Memo: " << memo.namaMemo << endl;
-        cout << "Tanggal: " << memo.tanggal << endl;
-        cout << "Isi Memo: " << memo.isiMemo << endl;
-    } else {
-        cerr << "Gagal membuka file " << filename << endl;
+int countDataMemo(){
+    int numMemo = 0; // Jumlah data Memo yang terbaca
+    ifstream readFile("../../Memos.dat", ios::in | ios::binary);
+    if (readFile.is_open()) {
+        // Hitung jumlah data dengan membaca per satu item
+        Memo temp;
+        while (readFile.read(reinterpret_cast<char*>(&temp), sizeof(Memo))) {
+            numMemo++;
+        }
+        readFile.close();
     }
+    return numMemo;
 }
 
-int main() {
-    Memo memo;
-    readMemoFile("memo.dat", memo);
-    return 0;
+Memo* readMemoFile(){
+    Memo *readMemo = nullptr; // Pointer ke array Memo
+    int numMemo = 0; // Jumlah data Memo yang terbaca
+
+    numMemo = countDataMemo();
+    // Alokasikan memori untuk array readMemo
+    readMemo = new Memo[numMemo];
+
+    // Baca data sebenarnya ke dalam array readMemo
+    ifstream readFileAgain("../../Memos.dat", ios::in | ios::binary);
+    if (readFileAgain.is_open()) {
+        readFileAgain.read(reinterpret_cast<char*>(readMemo), numMemo * sizeof(Memo));
+        readFileAgain.close();
+    } 
+    else {
+        cerr << "Gagal membuka file" << endl;
+    }
+
+    return readMemo;
 }

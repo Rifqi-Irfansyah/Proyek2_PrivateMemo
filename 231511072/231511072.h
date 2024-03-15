@@ -5,11 +5,14 @@
 using namespace std;
 
 struct Memo {
-    string namaMemo;
-    string tanggal;
-    string isiMemo;
+    char namaMemo[30];
+    char isiMemo[300];
+    time_t tanggal;
+
+    Memo() : namaMemo(""), isiMemo(""), tanggal(0) {}
 };
 
-void readMemoFile(const char* filename, Memo& memo);
+Memo* readMemoFile();
+int countDataMemo();
 
 #endif // MEMO_READER_H

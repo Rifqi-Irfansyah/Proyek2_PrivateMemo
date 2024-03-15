@@ -6,12 +6,12 @@
 using namespace std;
 
 struct Memo {
-    string namaMemo;
-    string isiMemo;
+    char namaMemo[30];
+    char isiMemo[300];
     time_t tanggal;
 
-    Memo() : namaMemo(""), isiMemo(""), tanggal(0) {}
-    Memo(const string& t, const string& c, time_t d) : namaMemo(t), isiMemo(c), tanggal(d) {}
+    // Memo() : namaMemo(""), isiMemo(""), tanggal(0) {}
+    // Memo(const string& t, const string& c, time_t d) : namaMemo(t), isiMemo(c), tanggal(d) {}
 };
 
 void tambahMemo(const Memo& memo);
