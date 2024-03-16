@@ -13,8 +13,8 @@ struct Memo {
     // Memo() : namaMemo(""), isiMemo(""), tanggal(0) {}
     // Memo(const string& t, const string& c, time_t d) : namaMemo(t), isiMemo(c), tanggal(d) {}
 };
-
 void tambahMemo(const Memo& memo);
+void inputMemo();
 // Memo readMemoFile();
 // bool authenticate(const string& password);
 

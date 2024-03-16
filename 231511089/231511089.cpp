@@ -9,14 +9,45 @@ using namespace std;
 // int main() {
 //     listMemo();
 // }
-int numMemo = countDataMemo() ;
-Memo2* readMemo = readMemoFile();
+int numMemo;
+Memo2* readMemo;
 
 void hapusFile() {
     std::remove("file_memo.txt");
 }
 
-void bukaMemo(int pilih_memo){
+void listMemo(){
+    // Panggil fungsi readMemoFile untuk mendapatkan data Memo
+    int pilih_memo;
+    numMemo = countDataMemo() ;
+    Memo2* readMemo = readMemoFile();
+
+    if (readMemo != nullptr) {
+        cout << "==========================================================\n";
+        cout << "\t\tDaftar Nama Memo Saat Ini\n";
+        cout << "==========================================================\n";
+
+        for (int i=0; i < numMemo; i++) {
+            cout << i+1 << ". Nama   : " << readMemo[i].namaMemo << endl;
+            cout << "   Dibuat : " << ctime(&readMemo[i].tanggal) << endl;
+        }
+        cout << "----------------------------------------------------------\n";
+        cout << "Silahkan Pilih Memo Yang akan dibaca \033[3matau kembali : '0'\033[0m  = ";
+        cin >> pilih_memo;
+        if (pilih_memo == 0){
+            system("cls");
+        }
+        else{
+            bukaMemo(pilih_memo, readMemo);
+        }
+    } else {
+        cerr << "Gagal membaca data Memo" << endl;
+    }
+
+    delete[] readMemo;
+}
+
+void bukaMemo(int pilih_memo, const Memo2* readMemo){
     char kembali;
 
     if ((pilih_memo < 1) || (pilih_memo > numMemo)){
@@ -31,9 +62,7 @@ void bukaMemo(int pilih_memo){
         myfile<<"-------------------------------------------"<<endl;
         myfile<<readMemo[pilih_memo - 1].isiMemo<<endl;
         system("start notepad file_memo.txt");
-
         atexit(hapusFile);
-
     }
 
     cout << "Kembali (y)? ";
@@ -42,36 +71,9 @@ void bukaMemo(int pilih_memo){
         system("cls");
         listMemo();
     }
-}
-
-void listMemo(){
-    // Panggil fungsi readMemoFile untuk mendapatkan data Memo
-    int pilih_memo;
-
-    if (readMemo != nullptr) {
-        cout << "==========================================================\n";
-        cout << "\t\tDaftar Nama Memo Saat Ini\n";
-        cout << "==========================================================\n";
-
-        for (int i=0; i < numMemo; i++) {
-            cout << i+1 << ". Nama   : " << readMemo[i].namaMemo << endl;
-            cout << "   Dibuat : " << ctime(&readMemo[i].tanggal) << endl;
-        }
-
-        cout << "----------------------------------------------------------\n";
-        cout << "Silahkan Pilih Memo Yang akan dibaca \033[3matau kembali : '0'\033[0m  = ";
-        cin >> pilih_memo;
-        if (pilih_memo == 0){
-            system("cls");
-        }
-        else{
-            bukaMemo(pilih_memo);
-        }
-    } else {
-        cerr << "Gagal membaca data Memo" << endl;
+    else{
+        system("exit");
     }
-
-    delete[] readMemo;
 }
 
 

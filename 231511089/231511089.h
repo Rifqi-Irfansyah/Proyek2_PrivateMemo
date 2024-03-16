@@ -10,7 +10,7 @@ extern Memo2* readMemo;
 void listMemo();
 void cekPassword(int pilih_memo, string pw);
 void hapusFile();
-void bukaMemo(int pilih_memo);
+void bukaMemo(int pilih_memo, const Memo2* memo);
 
 
 #endif

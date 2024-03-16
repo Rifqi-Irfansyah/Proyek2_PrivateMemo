@@ -4,7 +4,7 @@
 using namespace std;
 
 void tambahMemo(const Memo &memo) {
-    ofstream file("../../Memos.dat", ios::out | ios::binary | ios::app);
+    ofstream file("Memos.dat", ios::out | ios::binary | ios::app);
     if (!file) {
         cerr << "Gagal membuka file!" << endl;
         return;
@@ -13,15 +13,14 @@ void tambahMemo(const Memo &memo) {
     file.close();
 }
 
-int main() {
+void inputMemo() {
     Memo newMemo;
     cout << "Nama Memo: ";
+    cin.ignore();
     cin.getline(newMemo.namaMemo, 30);
     cout << "Isi Memo: ";
     cin.getline(newMemo.isiMemo, 300);
     newMemo.tanggal = time(nullptr);
 
     tambahMemo(newMemo);
-
-    return 0;
 }
