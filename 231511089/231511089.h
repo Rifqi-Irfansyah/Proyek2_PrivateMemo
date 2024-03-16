@@ -1,4 +1,5 @@
 #include "231511089.cpp"
+#include <ctime>
 
 struct Memo {
     char namaMemo[30];
