@@ -1,137 +1,132 @@
-#include <iostream>
-#include <cmath>
-#include <cstring>
-#include <cstdlib>
+#include<iostream>
+#include<math.h>
+#include<string.h>
+#include<stdlib.h>
 
-using l = long long int;
-#define S 100
+using namespace std;
 
-l p, q,     
-  n,       
-  t,       
-  flag,  
-  e[S], 
-  d[S], 
-  temp[S], m[S], en[S];
+#define MAX_SIZE 1000
 
-char msg[S];
+long int p, q, n, t, flag, key[MAX_SIZE][1000], temp[MAX_SIZE], m[MAX_SIZE], enkripsi[MAX_SIZE];
+char msg[MAX_SIZE];
 
-bool cekPrima(l); 
-void eksponen_publik();         
-l eksponen_privat(l);          
-void enkripsi();  
-void dekripsi(); 
+int prime(long int);
+void ce();
+long int cd(long int);
+void encrypt();
+void decrypt();
 
-bool cekPrima(l var) 
-{
-	int i, j = sqrt(var);
-	for (i = 2; i <= j; ++i)
-	if (var % i == 0)
-			return false;
-	return true;
+int prime(long int pr) {
+    int i;
+    long int j = sqrt(pr);
+    for (i = 2; i <= j; i++) {
+        if (pr % i == 0)
+            return 0;
+    }
+    return 1;
 }
 
-void eksponen_publik()
-{
-     int k = 0;
-     for (int i = 2; i < t; i++)
-     {
-	 if (t % i == 0) continue;
-	 flag = cekPrima(i);
-	 if (flag == 1 && i != p && i != q)
-	 {
-	     e[k] = i;
-	     flag = eksponen_privat(e[k]);
-	     if (flag > 0)
-	     {
-		d[k] = flag;
-		k++;
-	     }
-	     if (k == 99) // (S-1)
-	     break;
-	 }
-     }
+int main() {
+    cout << "\n\nMasukan Bilangan Prima Pertama (Di Atas 1) : ";
+    cin >> p;
+    flag = prime(p);
+    if (flag == 0) {
+        cout << "\nPenginputan Salah, Coba Lagi\n";
+        exit(1);
+    }
+
+    cout << "\nMasukan Bilangan Prima Kedua (Di Atas 1) : ";
+    cin >> q;
+    flag = prime(q);
+    if (flag == 0 || p == q) {
+        cout << "\n\nPenginputan Salah, Coba Lagi\n\n";
+        exit(1);
+    }
+
+    cout << "\n\nMasukan Password\n";
+    fflush(stdin);
+    cin >> msg;
+
+    for (int i = 0; msg[i] != '\0'; i++)
+        m[i] = msg[i];
+    
+    n = p * q;
+    t = (p - 1) * (q - 1);
+    ce();
+    encrypt();
+    decrypt();
+
+    cout << "\n\n";
+    return 0;
 }
 
-l eksponen_privat(l x) 
-{
-     long int k = 1;
-     while (true)
-     {
-	 k += t;
-	 if (k % x == 0) return (k / x);
-     }
+void ce() {
+    int k = 0, j = 0; // Mendeklarasikan variabel j di sini
+    for (int i = 2; i < t; i++) {
+        if (t % i == 0)
+            continue;
+        flag = prime(i);
+        if (flag == 1 && i != p && i != q) {
+            key[k][0] = i;
+            flag = cd(key[k][0]);
+            if (flag > 0) {
+                key[k][1] = flag;
+                k++;
+            }
+            if (k == MAX_SIZE)
+                break;
+        }
+    }
 }
 
-void enkripsi()
-{
-	l pt, ct, key = e[0], k, len;
-	int i = 0;
-	len = std::strlen(msg);
-	while (i != len)
-	{
-		pt = m[i];
-		pt = pt - 96;
-		k = 1;
-		for (int j = 0; j < key; j++)
-		{
-			k *= pt;
-			k %= n;
-		}
-		temp[i] = k;
-		ct = k + 96;
-		en[i] = ct;
-		i++;
-	}
-	en[i] = -1;
-	std::cout << "\nPesan Terenkripsi:\n";
-	for (i = 0; en[i] != -1; i++)
-		printf("%c", en[i]);
+long int cd(long int x) {
+    long int k = 1;
+    while (1) {
+        k = k + t;
+        if (k % x == 0)
+            return (k / x);
+    }
 }
 
-void dekripsi() 
-{
-	l pt, ct, key = d[0], k;
-	int i = 0;
-	while (en[i] != -1)
-	{
-		ct = temp[i];
-		k = 1;
-		for (int j = 0; j < key; j++)
-		{
-			k *= ct;
-			k %= n;
-		}
-		pt = k + 96;
-		m[i] = pt;
-		i++;
-	}
-	m[i] = -1;
-	std::cout << "\nPesan Terdekripsi:\n";
-	for (int i = 0; m[i] != -1; i++)
-		printf("%c", m[i]);
-	
+void encrypt() {
+    long int pt, ct, len;
+    len = strlen(msg);
+    for (int i = 0; i < len; i++) {
+        pt = m[i];
+        pt = pt - 96;
+        long int k = 1;
+        for (int j = 0; j < key[0][0]; j++) {
+            k = k * pt;
+            k = k % n;
+        }
+        temp[i] = k;
+        ct = k + 96;
+        enkripsi[i] = ct;
+    }
+    enkripsi[len] = -1;
+    cout << "\nPassword Enkripsi\n";
+    for (int i = 0; enkripsi[i] != -1; i++)
+        printf("%c", enkripsi[i]);
+    cout << "\n";
 }
 
-int main()
-{   
-    do 
-    {
-	   std::cout << "Masukkan dua bilangan prima (p,q untuk Euler's totient diambil sebagai (p-1)(q-1)):\n";
-	   std::cin >> p >> q;
-	   if(cekPrima(p) && cekPrima(q)) break;
-	   else std::cout << "Input salah; Silakan masukkan bilangan prima.\n";
-    } while(1);    
-
-	std::cout << "Masukkan pesan untuk dienkripsi:\n";
-	std::cin >> msg;
-	for (int i = 0; msg[i] != '\0'; i++)
-		m[i] = msg[i];
-		
-	n = p * q;
-	t = (p - 1) * (q - 1);
-	eksponen_publik();
-	enkripsi();
-	dekripsi();
-	return 0;
+void decrypt() {
+    long int pt, ct;
+    int i = 0;
+    while (enkripsi[i] != -1) {
+        ct = temp[i];
+        long int k = 1;
+        for (int j = 0; j < key[0][1]; j++) {
+            k = k * ct;
+            k = k % n;
+        }
+        pt = k + 96;
+        m[i] = pt;
+        i++;
+    }
+    m[i] = -1;
+    cout << "\nPassword Dekripsi\n";
+    for (int i = 0; m[i] != -1; i++)
+        printf("%c", m[i]);
+    cout << "\n\n";
 }
