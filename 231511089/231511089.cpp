@@ -10,18 +10,25 @@ int main() {
     // Panggil fungsi readMemoFile untuk mendapatkan data Memo
     Memo* readMemo = readMemoFile();
     int numMemo = countDataMemo();
-
-    cout << "numMemo = " <<numMemo;
+    int pilihan_memo;
 
     if (readMemo != nullptr) {
-        cout << "Data Memo\n";
+        cout << "==========================================================\n";
+        cout << "\t\tDaftar Nama Memo Saat Ini\n";
+        cout << "==========================================================\n";
+
         for (int i = 0; i < numMemo; i++) {
-            cout << "Nama: " << readMemo[i].isiMemo << ", Umur: " << readMemo[i].isiMemo << endl;
+            cout << "Nama: " << readMemo[i].isiMemo << endl;
+            cout << "Dibuat: " << readMemo[i].tanggal << endl;
         }
-        delete[] readMemo; // Bebaskan memori yang dialokasikan untuk array readMemo
+
+        cout << "----------------------------------------------------------\n";
+        cout << "Silahkan Pilih Memo Yang akan diBaca = ";
+        cin >> pilihan_memo;
     } else {
         cerr << "Gagal membaca data Memo" << endl;
     }
+
     delete[] readMemo;
 
     exit(0);
