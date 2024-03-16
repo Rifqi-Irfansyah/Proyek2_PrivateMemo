@@ -26,11 +26,11 @@
 
 int countDataMemo(){
     int numMemo = 0; // Jumlah data Memo yang terbaca
-    ifstream readFile("../Memos.dat", ios::in | ios::binary);
+    ifstream readFile("Memos.dat", ios::in | ios::binary);
     if (readFile.is_open()) {
         // Hitung jumlah data dengan membaca per satu item
-        Memo temp;
-        while (readFile.read(reinterpret_cast<char*>(&temp), sizeof(Memo))) {
+        Memo2 temp;
+        while (readFile.read(reinterpret_cast<char*>(&temp), sizeof(Memo2))) {
             numMemo++;
         }
         readFile.close();
@@ -38,18 +38,18 @@ int countDataMemo(){
     return numMemo;
 }
 
-Memo* readMemoFile(){
-    Memo *readMemo = nullptr; // Pointer ke array Memo
+Memo2* readMemoFile(){
+    Memo2 *readMemo = nullptr; // Pointer ke array Memo
     int numMemo = 0; // Jumlah data Memo yang terbaca
 
     numMemo = countDataMemo();
     // Alokasikan memori untuk array readMemo
-    readMemo = new Memo[numMemo];
+    readMemo = new Memo2[numMemo];
 
     // Baca data sebenarnya ke dalam array readMemo
-    ifstream readFileAgain("../Memos.dat", ios::in | ios::binary);
+    ifstream readFileAgain("Memos.dat", ios::in | ios::binary);
     if (readFileAgain.is_open()) {
-        readFileAgain.read(reinterpret_cast<char*>(readMemo), numMemo * sizeof(Memo));
+        readFileAgain.read(reinterpret_cast<char*>(readMemo), numMemo * sizeof(Memo2));
         readFileAgain.close();
     } 
     else {

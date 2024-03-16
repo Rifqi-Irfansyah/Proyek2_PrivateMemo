@@ -4,15 +4,15 @@
 #include <string>
 using namespace std;
 
-struct Memo {
+struct Memo2 {
     char namaMemo[30];
     char isiMemo[300];
     time_t tanggal;
 
-    Memo() : namaMemo(""), isiMemo(""), tanggal(0) {}
+    Memo2() : namaMemo(""), isiMemo(""), tanggal(0) {}
 };
 
-Memo* readMemoFile();
+Memo2* readMemoFile();
 int countDataMemo();
 
 #endif // MEMO_READER_H
