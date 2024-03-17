@@ -5,21 +5,27 @@
 
 using namespace std;
 
-#define MAX_SIZE 1000
+#define MAX_SIZE 20
 
-long int p, q, n, t, flag, key[MAX_SIZE][1000], temp[MAX_SIZE], m[MAX_SIZE], enkripsi[MAX_SIZE];
+long int p; 
+long int q;
+long int n;
+long int t;
+long int flag;
+long int key[MAX_SIZE][20];
+long int temp[MAX_SIZE];
+long int m[MAX_SIZE];
+long int enkripsi[MAX_SIZE];
 char msg[MAX_SIZE];
 
-int prime(long int);
+int prima(long int);
 void ce();
-long int cd(long int);
 void encrypt();
-void decrypt();
 
-int prime(long int pr) {
+int prima(long int pr) {
     int i;
     long int j = sqrt(pr);
-    for (i = 2; i <= j; i++) {
+    for (i = 2; i <= j; i = i + 1) {
         if (pr % i == 0)
             return 0;
     }
@@ -27,48 +33,37 @@ int prime(long int pr) {
 }
 
 int main() {
-    cout << "\n\nMasukan Bilangan Prima Pertama (Di Atas 1) : ";
-    cin >> p;
-    flag = prime(p);
-    if (flag == 0) {
-        cout << "\nPenginputan Salah, Coba Lagi\n";
-        exit(1);
-    }
 
-    cout << "\nMasukan Bilangan Prima Kedua (Di Atas 1) : ";
-    cin >> q;
-    flag = prime(q);
-    if (flag == 0 || p == q) {
-        cout << "\n\nPenginputan Salah, Coba Lagi\n\n";
-        exit(1);
-    }
+    p = 89;
+    flag = prima(p);
 
-    cout << "\n\nMasukan Password\n";
+    q = 97;
+    flag = prima(q);
+
+    cout << "\n\nMasukan Password : ";
     fflush(stdin);
-    cin >> msg;
+    cin.getline(msg, MAX_SIZE);
 
-    for (int i = 0; msg[i] != '\0'; i++)
+    for (int i = 0; msg[i] != '\0'; i = i +1)
         m[i] = msg[i];
     
     n = p * q;
     t = (p - 1) * (q - 1);
     ce();
     encrypt();
-    decrypt();
 
     cout << "\n\n";
     return 0;
 }
 
 void ce() {
-    int k = 0, j = 0; // Mendeklarasikan variabel j di sini
+    int k = 0, j = 0;
     for (int i = 2; i < t; i++) {
         if (t % i == 0)
             continue;
-        flag = prime(i);
+        flag = prima(i);
         if (flag == 1 && i != p && i != q) {
             key[k][0] = i;
-            flag = cd(key[k][0]);
             if (flag > 0) {
                 key[k][1] = flag;
                 k++;
@@ -76,15 +71,6 @@ void ce() {
             if (k == MAX_SIZE)
                 break;
         }
-    }
-}
-
-long int cd(long int x) {
-    long int k = 1;
-    while (1) {
-        k = k + t;
-        if (k % x == 0)
-            return (k / x);
     }
 }
 
@@ -108,25 +94,4 @@ void encrypt() {
     for (int i = 0; enkripsi[i] != -1; i++)
         printf("%c", enkripsi[i]);
     cout << "\n";
-}
-
-void decrypt() {
-    long int pt, ct;
-    int i = 0;
-    while (enkripsi[i] != -1) {
-        ct = temp[i];
-        long int k = 1;
-        for (int j = 0; j < key[0][1]; j++) {
-            k = k * ct;
-            k = k % n;
-        }
-        pt = k + 96;
-        m[i] = pt;
-        i++;
-    }
-    m[i] = -1;
-    cout << "\nPassword Dekripsi\n";
-    for (int i = 0; m[i] != -1; i++)
-        printf("%c", m[i]);
-    cout << "\n\n";
 }
