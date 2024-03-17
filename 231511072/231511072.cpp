@@ -39,7 +39,7 @@ int countDataMemo(){
 }
 
 Memo2* readMemoFile(){
-    Memo2 *readMemo; // Pointer ke array Memo
+    Memo2 *readMemo  ; // Pointer ke array Memo
     int numMemo = 0; // Jumlah data Memo yang terbaca
 
     numMemo = countDataMemo();

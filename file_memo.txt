@@ -1,0 +1,6 @@
+-------------------------------------------
+Nama Memo	: Berlin
+Tanggal Dibuat	: Sun Mar 17 19:32:58 2024
+
+-------------------------------------------
+Mencoba Running Aplikasi
