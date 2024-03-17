@@ -7,9 +7,10 @@ using namespace std;
 struct Memo2 {
     char namaMemo[30];
     char isiMemo[300];
+    char password[50];
     time_t tanggal;
 
-    Memo2() : namaMemo(""), isiMemo(""), tanggal(0) {}
+    Memo2() : namaMemo(""), isiMemo(""), password(""), tanggal(0) {}
 };
 
 Memo2* readMemoFile();
