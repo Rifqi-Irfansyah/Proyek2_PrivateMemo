@@ -8,6 +8,7 @@ using namespace std;
 struct Memo {
     char namaMemo[30];
     char isiMemo[300];
+    char password[50];
     time_t tanggal;
 
     // Memo() : namaMemo(""), isiMemo(""), tanggal(0) {}
