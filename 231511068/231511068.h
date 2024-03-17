@@ -8,7 +8,7 @@
 #define MAX_SIZE 1000
 
 // Function prototypes
-long int cd(long int x);
+long int OPD(long int x);
 void dekripsi(long int enkripsi[MAX_SIZE]);
 
 #endif

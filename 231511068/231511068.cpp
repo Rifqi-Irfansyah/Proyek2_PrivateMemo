@@ -4,7 +4,7 @@ long int n, OPt, key[MAX_SIZE][1000], temp[MAX_SIZE], m[MAX_SIZE], enkripsi[MAX_
 long int cd(long int);
 void dekripsi(long int enkripsi[MAX_SIZE]);
 
-long int cd(long int x) {
+long int OPD(long int x) {
     long int k = 1;
     while (1) {
         k = k + OPt;
