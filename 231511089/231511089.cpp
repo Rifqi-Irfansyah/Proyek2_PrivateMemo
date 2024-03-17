@@ -50,19 +50,21 @@ void listMemo(){
 void bukaMemo(int pilih_memo, const Memo2* readMemo){
     char kembali;
 
-    if ((pilih_memo < 1) || (pilih_memo > numMemo)){
-            cout << "Maaf tidak ada data memo " << pilih_memo <<endl;
-    }
-    else{
+    if ((pilih_memo > 0) && (pilih_memo <= numMemo)){
         ofstream myfile;
         myfile.open("file_memo.txt");
         myfile<<"-------------------------------------------"<<endl;
         myfile<<"Nama Memo\t: "<<readMemo[pilih_memo - 1].namaMemo <<endl;
         myfile<<"Tanggal Dibuat\t: "<<ctime(&readMemo[pilih_memo - 1].tanggal) <<endl;
+        // myfile<<"Password\t: "<<readMemo[pilih_memo - 1].password <<endl;
         myfile<<"-------------------------------------------"<<endl;
         myfile<<readMemo[pilih_memo - 1].isiMemo<<endl;
         system("start notepad file_memo.txt");
         atexit(hapusFile);
+    }
+    else{
+        cout << "Maaf tidak ada data memo " << pilih_memo <<endl;
+
     }
 
     cout << "Kembali (y)? ";

@@ -2,7 +2,6 @@
 
 long int n, t, key[MAX_SIZE][1000], temp[MAX_SIZE], m[MAX_SIZE], enkripsi[MAX_SIZE];
 long int cd(long int);
-void dekripsi(long int enkripsi[MAX_SIZE]);
 
 long int OPD(long int x) {
     long int k = 1;
@@ -13,8 +12,9 @@ long int OPD(long int x) {
     }
 }
 
-void dekripsi(long int enkripsi[MAX_SIZE]) {
+string dekripsi(char enkripsi[MAX_SIZE]) {
     long int pt, kalt;
+    char hasil_dekripsi[MAX_SIZE];
     int i = 0;
     while (enkripsi[i] != -1) {
         kalt = temp[i];
@@ -28,8 +28,20 @@ void dekripsi(long int enkripsi[MAX_SIZE]) {
         i++;
     }
     m[i] = -1;
-    std :: cout << "\nPassword Dekripsi\n";
-    for (int i = 0; m[i] != -1; i++)
-        printf("%c", m[i]);
-    std :: cout << "\n\n";
+    for (int i = 0; m[i] != -1; i++){
+        hasil_dekripsi[i] = m[i];
+    }
+    return hasil_dekripsi;
+}
+
+int main(){
+    char password[MAX_SIZE];
+    string password_encrypt;
+    cout << "\n\nMasukan Password : ";
+    fflush(stdin);
+    cin.getline(password, MAX_SIZE);
+
+    password_encrypt = dekripsi(password);
+
+    cout << "Hasil = " <<password_encrypt;
 }

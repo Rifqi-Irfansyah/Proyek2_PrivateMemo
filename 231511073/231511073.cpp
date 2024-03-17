@@ -1,5 +1,15 @@
 #include"231511073.h"
 
+long int p; 
+long int q;
+long int n;
+long int t;
+long int flag;
+long int key[MAX_SIZE][20];
+long int temp[MAX_SIZE];
+long int m[MAX_SIZE];
+long int enkripsi[MAX_SIZE];
+char msg[MAX_SIZE];
 
 int prima(long int pr) {
     int i;
@@ -42,7 +52,7 @@ void ce() {
     }
 }
 
-string encrypt(char msg[50]) {
+string encrypt(const string& msg) {
     char password_encrypt[50] = "";
     p = 89;
     flag = prima(p);
@@ -59,7 +69,7 @@ string encrypt(char msg[50]) {
     ce();
 
     long int pt, ct, len;
-    len = strlen(msg);
+    len = msg.size(); 
     for (int i = 0; i < len; i++) {
         pt = m[i];
         pt = pt - 96;
@@ -76,5 +86,6 @@ string encrypt(char msg[50]) {
     for (int i = 0; enkripsi[i] != -1; i++){
         password_encrypt[i] = enkripsi[i];
     }
-    return password_encrypt;
+    string pass_string(password_encrypt);
+    return pass_string;
 }

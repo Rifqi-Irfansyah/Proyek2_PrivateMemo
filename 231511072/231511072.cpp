@@ -22,6 +22,7 @@
 // memo_reader.cpp
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "231511072.h"
 
 int countDataMemo(){
@@ -39,7 +40,7 @@ int countDataMemo(){
 }
 
 Memo2* readMemoFile(){
-    Memo2 *readMemo  ; // Pointer ke array Memo
+    Memo2 *readMemo = nullptr ; // Pointer ke array Memo
     int numMemo = 0; // Jumlah data Memo yang terbaca
 
     numMemo = countDataMemo();

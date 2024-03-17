@@ -2,6 +2,7 @@
 #define MEMO_READER_H
 
 #include <string>
+#include <ctime>
 using namespace std;
 
 struct Memo2 {

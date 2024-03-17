@@ -5,10 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#define MAX_SIZE 1000
-
+#define MAX_SIZE 50
+using namespace std;
 // Function prototypes
 long int OPD(long int x);
-void dekripsi(long int enkripsi[MAX_SIZE]);
+string dekripsi(char enkripsi[MAX_SIZE]);
 
 #endif

@@ -11,7 +11,7 @@ struct Memo {
     char password[50];
     time_t tanggal;
 
-    // Memo() : namaMemo(""), isiMemo(""), tanggal(0) {}
+    Memo() : namaMemo(""), isiMemo(""), password(""), tanggal(0) {}
     // Memo(const string& t, const string& c, time_t d) : namaMemo(t), isiMemo(c), tanggal(d) {}
 };
 void tambahMemo(const Memo& memo);

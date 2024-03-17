@@ -2,6 +2,7 @@
 #include "../231511073/231511073.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 using namespace std;
 
 // modul tambahMemo
@@ -18,16 +19,19 @@ void tambahMemo(const Memo &memo) {
 // modul inputMemo
 void inputMemo() {
     Memo newMemo;
+    char password[50];
     cout << "Nama Memo: ";
     cin.ignore();
     cin.getline(newMemo.namaMemo, 30);
     cout << "Isi Memo: ";
     cin.getline(newMemo.isiMemo, 300);
-    newMemo.tanggal = time(nullptr);
     cout << "Masukkan Password: ";
-    cin.getline(newMemo.password, 50); // menginputkan password
+    cin.getline(password, 50); // menginputkan password
     
-    string password_encrypt = encrypt(newMemo.password); // Memanggil fungsi encrypt dari 231511073.h
+    string pw_encrpyt = encrypt(password);
+    strcpy(newMemo.password, pw_encrpyt.c_str());
+    // newMemo.password = (password); // Memanggil fungsi encrypt dari 231511073.h
+    newMemo.tanggal = time(nullptr);
 
     tambahMemo(newMemo);
 }
