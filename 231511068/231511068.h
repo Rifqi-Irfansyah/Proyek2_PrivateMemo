@@ -8,7 +8,7 @@
 #define MAX_SIZE 50
 using namespace std;
 // Function prototypes
-long int OPD(long int x);
-string dekripsi(char enkripsi[MAX_SIZE]);
+long int cd(long int x);
+void decrypt();
 
 #endif

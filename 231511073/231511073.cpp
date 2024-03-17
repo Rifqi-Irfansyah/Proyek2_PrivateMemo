@@ -1,15 +1,5 @@
 #include"231511073.h"
 
-long int p; 
-long int q;
-long int n;
-long int t;
-long int flag;
-long int key[MAX_SIZE][20];
-long int temp[MAX_SIZE];
-long int m[MAX_SIZE];
-long int enkripsi[MAX_SIZE];
-char msg[MAX_SIZE];
 
 int prima(long int pr) {
     int i;
@@ -21,18 +11,7 @@ int prima(long int pr) {
     return 1;
 }
 
-// int main() {
-//     char password[MAX_SIZE];
-//     string password_encrypt;
-//     cout << "\n\nMasukan Password : ";
-//     fflush(stdin);
-//     cin.getline(password, MAX_SIZE);
-
-//     password_encrypt = encrypt(password);
-
-//     cout << password_encrypt;
-    
-// }
+// int main-nya dipindahin ke bawah
 
 void ce() {
     int k = 0, j = 0;
@@ -52,6 +31,8 @@ void ce() {
     }
 }
 
+// char- nya di tambahin 50
+
 string encrypt(const string& msg) {
     char password_encrypt[50] = "";
     p = 89;
@@ -65,7 +46,6 @@ string encrypt(const string& msg) {
     
     n = p * q;
     t = (p - 1) * (q - 1);
-    
     ce();
 
     long int pt, ct, len;
@@ -86,6 +66,5 @@ string encrypt(const string& msg) {
     for (int i = 0; enkripsi[i] != -1; i++){
         password_encrypt[i] = enkripsi[i];
     }
-    string pass_string(password_encrypt);
-    return pass_string;
+    return password_encrypt;
 }
