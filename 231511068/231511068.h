@@ -1,11 +1,14 @@
-#include<iostream>
-#include<stdlib.h>
-#include<string.h>
-#include<math.h>
+#ifndef HEADER_231511068_H
+#define HEADER_231511068_H
 
-int prime(long int pr);
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#define MAX_SIZE 1000
+
+// Function prototypes
 long int cd(long int x);
-void ce();
-void encrypt();
-void decrypt();
- 
+void dekripsi(long int enkripsi[MAX_SIZE]);
+
+#endif
