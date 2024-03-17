@@ -21,6 +21,8 @@ void inputMemo() {
     cout << "Isi Memo: ";
     cin.getline(newMemo.isiMemo, 300);
     newMemo.tanggal = time(nullptr);
+    cout << "Masukkan Password: ";
+    cin.getline(newMemo.password, 50);
 
     tambahMemo(newMemo);
 }
