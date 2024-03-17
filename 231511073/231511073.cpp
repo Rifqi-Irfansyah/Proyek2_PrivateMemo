@@ -1,5 +1,15 @@
 #include"231511073.h"
 
+long int p; 
+long int q;
+long int n;
+long int t;
+long int flag;
+long int key[MAX_SIZE][20];
+long int temp[MAX_SIZE];
+long int m[MAX_SIZE];
+long int enkripsi[MAX_SIZE];
+char msg[MAX_SIZE];
 
 int prima(long int pr) {
     int i;
