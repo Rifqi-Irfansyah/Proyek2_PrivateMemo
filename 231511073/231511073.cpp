@@ -1,26 +1,5 @@
-#include<iostream>
-#include<math.h>
-#include<string.h>
-#include<stdlib.h>
+#include"231511073.h"
 
-using namespace std;
-
-#define MAX_SIZE 20
-
-long int p; 
-long int q;
-long int n;
-long int t;
-long int flag;
-long int key[MAX_SIZE][20];
-long int temp[MAX_SIZE];
-long int m[MAX_SIZE];
-long int enkripsi[MAX_SIZE];
-char msg[MAX_SIZE];
-
-int prima(long int);
-void ce();
-void encrypt();
 
 int prima(long int pr) {
     int i;
@@ -32,29 +11,18 @@ int prima(long int pr) {
     return 1;
 }
 
-int main() {
+// int main() {
+//     char password[MAX_SIZE];
+//     string password_encrypt;
+//     cout << "\n\nMasukan Password : ";
+//     fflush(stdin);
+//     cin.getline(password, MAX_SIZE);
 
-    p = 89;
-    flag = prima(p);
+//     password_encrypt = encrypt(password);
 
-    q = 97;
-    flag = prima(q);
-
-    cout << "\n\nMasukan Password : ";
-    fflush(stdin);
-    cin.getline(msg, MAX_SIZE);
-
-    for (int i = 0; msg[i] != '\0'; i = i +1)
-        m[i] = msg[i];
+//     cout << password_encrypt;
     
-    n = p * q;
-    t = (p - 1) * (q - 1);
-    ce();
-    encrypt();
-
-    cout << "\n\n";
-    return 0;
-}
+// }
 
 void ce() {
     int k = 0, j = 0;
@@ -74,7 +42,22 @@ void ce() {
     }
 }
 
-void encrypt() {
+string encrypt(char msg[50]) {
+    char password_encrypt[50] = "";
+    p = 89;
+    flag = prima(p);
+
+    q = 97;
+    flag = prima(q);
+
+    for (int i = 0; msg[i] != '\0'; i = i +1)
+        m[i] = msg[i];
+    
+    n = p * q;
+    t = (p - 1) * (q - 1);
+    
+    ce();
+
     long int pt, ct, len;
     len = strlen(msg);
     for (int i = 0; i < len; i++) {
@@ -90,8 +73,8 @@ void encrypt() {
         enkripsi[i] = ct;
     }
     enkripsi[len] = -1;
-    cout << "\nPassword Enkripsi\n";
-    for (int i = 0; enkripsi[i] != -1; i++)
-        printf("%c", enkripsi[i]);
-    cout << "\n";
+    for (int i = 0; enkripsi[i] != -1; i++){
+        password_encrypt[i] = enkripsi[i];
+    }
+    return password_encrypt;
 }
