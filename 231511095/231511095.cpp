@@ -13,24 +13,26 @@ void tambahMemo(const Memo &memo) {
         return;
     }
     file.write(reinterpret_cast<const char*>(&memo), sizeof(Memo));
+    // ditulis ke dalam file dalam bentuk biner dengan melakukan alokasi file terlebih dulu
     file.close();
+    // file ditutup
 }
 
 // modul inputMemo
 void inputMemo() {
     Memo newMemo;
-    char password[50];
+    char password[50]; // deklarasi variabel password bertipe array of char dengan length 50
     cout << "Nama Memo: ";
     cin.ignore();
-    cin.getline(newMemo.namaMemo, 30);
+    cin.getline(newMemo.namaMemo, 30); // dilakukan input untuk Nama Memo
     cout << "Isi Memo: ";
-    cin.getline(newMemo.isiMemo, 300);
+    cin.getline(newMemo.isiMemo, 300); // dilakukan input untuk Isian Memo
     cout << "Masukkan Password: ";
     cin.getline(password, 50); // menginputkan password
     
-    string pw_encrpyt = encrypt(password);
+    string pw_encrpyt = encrypt(password); // dilakukan enkripsi password dengan memanggil function encrypt di 231511073.h
     strcpy(newMemo.password, pw_encrpyt.c_str());
-    // newMemo.password = (password); // Memanggil fungsi encrypt dari 231511073.h
+
     newMemo.tanggal = time(nullptr);
 
     tambahMemo(newMemo);
