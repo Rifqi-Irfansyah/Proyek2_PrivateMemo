@@ -20,3 +20,19 @@ char* encrypt(const char plainText[], int key) {
 
     return encryptedText;
 }
+
+int main() {
+    const int MAX_INPUT = 1000;
+    char input[MAX_INPUT];
+    int key = 7;
+
+    std::cout << "Enter the text to encrypt: ";
+    std::cin.getline(input, MAX_INPUT);
+
+    char* encryptedText = encrypt(input, key);
+    std::cout << "Encrypted Text: " << encryptedText << std::endl;
+
+    delete[] encryptedText; // Free the dynamically allocated memory
+
+    return 0;
+}
