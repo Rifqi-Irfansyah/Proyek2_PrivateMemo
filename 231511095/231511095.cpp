@@ -30,7 +30,8 @@ void inputMemo() {
     cout << "Masukkan Password: ";
     cin.getline(password, 50); // menginputkan password
     
-    string pw_encrpyt = encrypt(password); // dilakukan enkripsi password dengan memanggil function encrypt di 231511073.h
+    int key = 17;
+    string pw_encrpyt = encrypt(password, key); // dilakukan enkripsi password dengan memanggil function encrypt di 231511073.h
     strcpy(newMemo.password, pw_encrpyt.c_str());
 
     newMemo.tanggal = time(nullptr);

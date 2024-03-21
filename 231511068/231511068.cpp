@@ -20,19 +20,3 @@ char* decrypt(const char cipherText[], int key) {
 
     return decryptedText;
 }
-
-int main() {
-    const int MAX_INPUT = 1000;
-    char input[MAX_INPUT];
-    int key = 7;
-
-    std::cout << "Enter the text to decrypt: ";
-    std::cin.getline(input, MAX_INPUT);
-
-    char* decryptedText = decrypt(input, key);
-    std::cout << "Decrypted Text: " << decryptedText << std::endl;
-
-    delete[] decryptedText; // Free the dynamically allocated memory
-
-    return 0;
-}

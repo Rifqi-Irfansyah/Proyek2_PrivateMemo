@@ -9,6 +9,6 @@
 using namespace std;
 // Function prototypes
 long int cd(long int x);
-void decrypt();
+char* decrypt(const char cipherText[], int key);
 
 #endif

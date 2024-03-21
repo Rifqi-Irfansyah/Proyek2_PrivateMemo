@@ -9,7 +9,7 @@
 using namespace std;
 int prima(long int);
 void ce();
-string encrypt(const string& msg);
+char* encrypt(const char plainText[], int key);
 
 #define MAX_SIZE 50
 
