@@ -1,156 +1,38 @@
-#include "231511068.h"
+#include <iostream>
+#include <cstring>
 
-long int n, t, key[MAX_SIZE][1000], temp[MAX_SIZE], m[MAX_SIZE], enkripsi[MAX_SIZE];
-long int cd(long int);
+const int MAX_ROWS = 10;
+const int MAX_COLS = 100;
 
-long int p, q, n, t, flag, key[MAX_SIZE][1000], temp[MAX_SIZE], m[MAX_SIZE], enkripsi[MAX_SIZE];
-char msg[MAX_SIZE];
+char* decrypt(const char cipherText[], int key) {
+    char* decryptedText = new char[MAX_ROWS * MAX_COLS];
+    int len = strlen(cipherText);
 
-int prime(long int);
-void ce();
-long int cd(long int);
-void encrypt();
-void decrypt();
-
-int prime(long int pr) {
-    int i;
-    long int j = sqrt(pr);
-    for (i = 2; i <= j; i++) {
-        if (pr % i == 0)
-            return 0;
+    for (int i = 0; i < len; i++) {
+        if (isalpha(cipherText[i])) {
+            char base = islower(cipherText[i]) ? 'a' : 'A';
+            decryptedText[i] = (cipherText[i] - base - key + 26) % 26 + base;
+        } else {
+            decryptedText[i] = cipherText[i];
+        }
     }
-    return 1;
+    decryptedText[len] = '\0'; // Add null terminator
+
+    return decryptedText;
 }
 
 int main() {
-    // std :: cout << "\n\nMasukan Bilangan Prima Pertama (Di Atas 1) : ";
-    // std :: cin >> p;
-    p = 89; //bilangan prima ke 1
-    flag = prime(p);
-    // if (flag == 0) {
-    //     std :: cout << "\nPenginputan Salah, Coba Lagi\n";
-    //     exit(1);
-    // }
+    const int MAX_INPUT = 1000;
+    char input[MAX_INPUT];
+    int key = 7;
 
-    // std :: cout << "\nMasukan Bilangan Prima Kedua (Di Atas 1) : ";
-    // std :: cin >> q;
-    q = 97; //bilangan prima ke 2
-    flag = prime(q);
-    // if (flag == 0 || p == q) {
-    //     std :: cout << "\n\nPenginputan Salah, Coba Lagi\n\n";
-    //     exit(1);
-    // }
+    std::cout << "Enter the text to decrypt: ";
+    std::cin.getline(input, MAX_INPUT);
 
-    std :: cout << "\n\nMasukan Password\n";
-    fflush(stdin);
-    std :: cin.getline(msg, MAX_SIZE);
-    // std :: cin >> msg;
+    char* decryptedText = decrypt(input, key);
+    std::cout << "Decrypted Text: " << decryptedText << std::endl;
 
-    for (int i = 0; msg[i] != '\0'; i++)
-        m[i] = msg[i];
-    
-    n = p * q;
-    t = (p - 1) * (q - 1);
-    ce();
-    encrypt();
-    decrypt();
+    delete[] decryptedText; // Free the dynamically allocated memory
 
-   std :: cout << "\n\n";
     return 0;
-}
-
-void ce() {
-    int k = 0, j = 0; // Mendeklarasikan variabel j di sini
-    for (int i = 2; i < t; i++) {
-        if (t % i == 0)
-            continue;
-        flag = prime(i);
-        if (flag == 1 && i != p && i != q) {
-            key[k][0] = i;
-            flag = cd(key[k][0]);
-            if (flag > 0) {
-                key[k][1] = flag;
-                k++;
-            }
-            if (k == MAX_SIZE)
-                break;
-        }
-    }
-}
-
-long int cd(long int x) {
-    long int k = 1;
-    while (1) {
-        k = k + t;
-        if (k % x == 0)
-            return (k / x);
-    }
-}
-
-<<<<<<< HEAD
-string dekripsi(char enkripsi[MAX_SIZE]) {
-    long int pt, kalt;
-    char hasil_dekripsi[MAX_SIZE];
-=======
-void encrypt() {
-    long int pt, ct, len;
-    len = strlen(msg);
-    for (int i = 0; i < len; i++) {
-        pt = m[i];
-        pt = pt - 96;
-        long int k = 1;
-        for (int j = 0; j < key[0][0]; j++) {
-            k = k * pt;
-            k = k % n;
-        }
-        temp[i] = k;
-        ct = k + 96;
-        enkripsi[i] = ct;
-    }
-    enkripsi[len] = -1;
-    std :: cout << "\nPassword Enkripsi\n";
-    for (int i = 0; enkripsi[i] != -1; i++)
-        printf("%c", enkripsi[i]);
-    std :: cout << "\n";
-}
-
-void decrypt() {
-    long int pt, ct;
->>>>>>> 9bb905a01ad3aa3868248e1304c53a63ce9c3697
-    int i = 0;
-    while (enkripsi[i] != -1) {
-        ct = temp[i];
-        long int k = 1;
-        for (int j = 0; j < key[0][1]; j++) {
-            k = k * ct;
-            k = k % n;
-        }
-        pt = k + 96;
-        m[i] = pt;
-        i++;
-    }
-    m[i] = -1;
-<<<<<<< HEAD
-    for (int i = 0; m[i] != -1; i++){
-        hasil_dekripsi[i] = m[i];
-    }
-    return hasil_dekripsi;
-}
-
-int main(){
-    char password[MAX_SIZE];
-    string password_encrypt;
-    cout << "\n\nMasukan Password : ";
-    fflush(stdin);
-    cin.getline(password, MAX_SIZE);
-
-    password_encrypt = dekripsi(password);
-
-    cout << "Hasil = " <<password_encrypt;
-=======
-    std :: cout << "\nPassword Dekripsi\n";
-    for (int i = 0; m[i] != -1; i++)
-        printf("%c", m[i]);
-    std :: cout << "\n\n";
->>>>>>> 9bb905a01ad3aa3868248e1304c53a63ce9c3697
 }
