@@ -22,19 +22,3 @@ char* encrypt(const char plainText[], int key) {
 
     return encryptedText;
 }
-
-int main() {
-    const int MAX_INPUT = 1000;
-    char input[MAX_INPUT];
-    int key = 7;
-
-    cout << "Masukan Pesan Yang Akan Di Enkripsi : ";
-    cin.getline(input, MAX_INPUT);
-
-    char* encryptedText = encrypt(input, key);
-    cout << "Pesan Yang Terenkripsi : " << encryptedText << endl;
-
-    delete[] encryptedText;
-
-    return 0;
-}
