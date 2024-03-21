@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstring>
 
+using namespace std;
+
 const int MAX_ROWS = 10;
 const int MAX_COLS = 100;
 
@@ -16,7 +18,7 @@ char* encrypt(const char plainText[], int key) {
             encryptedText[i] = plainText[i];
         }
     }
-    encryptedText[len] = '\0'; // Add null terminator
+    encryptedText[len] = '\0';
 
     return encryptedText;
 }
@@ -26,13 +28,13 @@ int main() {
     char input[MAX_INPUT];
     int key = 7;
 
-    std::cout << "Enter the text to encrypt: ";
-    std::cin.getline(input, MAX_INPUT);
+    cout << "Masukan Pesan Yang Akan Di Enkripsi : ";
+    cin.getline(input, MAX_INPUT);
 
     char* encryptedText = encrypt(input, key);
-    std::cout << "Encrypted Text: " << encryptedText << std::endl;
+    cout << "Pesan Yang Terenkripsi : " << encryptedText << endl;
 
-    delete[] encryptedText; // Free the dynamically allocated memory
+    delete[] encryptedText;
 
     return 0;
 }
