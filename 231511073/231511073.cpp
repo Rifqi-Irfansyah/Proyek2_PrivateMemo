@@ -2,7 +2,7 @@
 #include <cstring>
 
 const int MAX_ROWS = 10;
-const int MAX_COLS = 10;
+const int MAX_COLS = 100;
 
 char* encrypt(const char plainText[], int key) {
     char* encryptedText = new char[MAX_ROWS * MAX_COLS];
