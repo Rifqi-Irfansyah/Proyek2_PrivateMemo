@@ -3,10 +3,10 @@
 #include <string>
 #include "231511072.h"
 
-int countDataMemo(){
+int countDataMemo(){  
     int numMemo = 0; // Jumlah data Memo yang terbaca
     ifstream readFile("Memos.dat", ios::in | ios::binary); //membuka file Memos.dat dalam mode baca dan mode biner
-    if (readFile.is_open()) //memeriksa apakah file berhasil dibuka atau tidak
+    if (readFile.is_open()) /
     {
         // Hitung jumlah data dengan membaca per satu item
         Memo2 temp; //membaca data dari file sementara
@@ -14,14 +14,14 @@ int countDataMemo(){
         {
             numMemo++; //menambahkan nilai numMemo dengan 1 setiap kali objek temp berhasil dibaca dari file //menghitung jumlah data Memo2 yang terbaca
         }
-        readFile.close(); //menutup file Memos.dat setelah semua data selesai dibaca
+        readFile.close();
     }
-    return numMemo; //mengembalikan nilai numMemo 
+    return numMemo;  
 }
 
 Memo2* readMemoFile(){
     Memo2 *readMemo = nullptr ; // Pointer ke array Memo
-    int numMemo = 0; // Jumlah data Memo yang terbaca
+    int numMemo = 0; 
 
     numMemo = countDataMemo(); 
     // Alokasikan memori untuk array readMemo
