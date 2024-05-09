@@ -10,72 +10,67 @@ void listMemo(){
     address_memo awal, akhir, hasil_search;
     int pilih_memo, pilih_aksi, readData;
 
-    readData = readRecords("memo_coba.dat", awal, akhir);
+    do{
+        system("cls");
+        readData = readRecords("memo_coba.dat", awal, akhir);
 
-    cout << "==========================================================\n";
-    cout << "\t\tDaftar Nama Memo Saat Ini\n";
-    cout << "==========================================================\n";
+        cout << "==========================================================\n";
+        cout << "\t\tDaftar Nama Memo Saat Ini\n";
+        cout << "==========================================================\n";
 
-    if (readData == 0){
-        cout << " !! Maaf Saat ini, tidak ada Memo !! ";
-    }
-    else{
-        showNode(awal);
-        
-        cout << "----------------------------------------------------------\n";
-        cout << "Silahkan Pilih Memo \033[3m atau kembali : '0'\033[0m  = ";
-        cin >> pilih_memo;
-        if (pilih_memo == 0){
-            system("exit");
-            return ;
-        }
-        else{
-            hasil_search = searchingNode(awal, pilih_memo);
-            if(hasil_search == NULL){
-                cout << "Maaf ID Memo tidak ada";
-            }
-            else{
-                cout << "\n 1. Buka Memo\n";
-                cout << " 2. Edit Memo\n";
-                cout << " 3. Hapus Memo\n";
-                cout << " Pilih Aksi Pada Memo ' " << hasil_search->namaMemo <<" ' = ";
-                cin >> pilih_aksi;
-
-                switch(pilih_aksi){
-                    case 1:
-                        bukaMemo(hasil_search);
-                        break;
-                    
-                    case 2:
-                        cout << "";
-                        break;
-
-                    case 3:
-                        removeNodeAnywhere(awal, akhir, hasil_search);
-                        saveRecords("memo_coba.dat", awal);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-            cout << "\nTekan Enter Untuk Melanjutkan";
+        if (readData == 0){
+            cout << " !! Saat ini tidak ada data Memo !! ";
+            cout << "\nTekan Enter Untuk Kembali Ke Beranda";
             cin.ignore();
             cin.get();
-            // system("cls");
-            system("exit");
-            listMemo();
+            pilih_memo = 0;
         }
-    }
+        else{
+            showNode(awal);
+            cout << "----------------------------------------------------------\n";
+            cout << "Silahkan Pilih Memo \033[3m atau kembali : '0'\033[0m  = ";
+            cin >> pilih_memo;
 
-    cout << "\nTekan Enter Untuk Kembali Ke Beranda";
-    cin.ignore();
-    cin.get();
-    // system("exit");
+            if (pilih_memo != 0){
+                hasil_search = searchingNode(awal, pilih_memo);
+                if(hasil_search == NULL){
+                    cout << "Maaf ID Memo tidak ada";
+                }
+                else{
+                    cout << "\n 1. Buka Memo\n";
+                    cout << " 2. Edit Memo\n";
+                    cout << " 3. Hapus Memo\n";
+                    cout << " Pilih Aksi Pada Memo ' " << hasil_search->namaMemo <<" ' = ";
+                    cin >> pilih_aksi;
+
+                    switch(pilih_aksi){
+                        case 1:
+                            bukaMemo(hasil_search);
+                            break;
+                        
+                        case 2:
+                            cout << "";
+                            break;
+
+                        case 3:
+                            removeNodeAnywhere(awal, akhir, hasil_search);
+                            saveRecords("memo_coba.dat", awal);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                cout << "\nTekan Enter Untuk Refresh List";
+                cin.ignore();
+                cin.get();
+            }
+        }
+
+    }while(pilih_memo != 0);
 }
 
 void bukaMemo(address_memo node){
-    char kembali;
     int key = 17;
     char pw_encrypt[50];
     strcpy(pw_encrypt, node->password);
@@ -93,16 +88,6 @@ void bukaMemo(address_memo node){
 
         system("start notepad file_memo.txt");
         atexit(hapusFile);
-    }
-
-    cout << "Kembali (y)? ";
-    cin >> kembali;
-    if (kembali == 'y'){
-        system("cls");
-        listMemo();
-    }
-    else{
-        system("exit");
     }
 }
 
