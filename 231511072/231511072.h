@@ -16,7 +16,7 @@ typedef struct Memo {
     address_memo next; //pointer ke memo berikutnya
     address_memo prev; //pointer ke memo sebelumnya
 
-    Memo() : id_memo(0), namaMemo(""), isiMemo(""), password(""), tanggal(0) {}
+    Memo() : id_memo(0), namaMemo(""), isiMemo(""), password(""), tanggal(0), next(NULL), prev(NULL) {}
     // inisiasi Memo yang memiliki nilai default dengan string kosong
 
 } ElmtList;

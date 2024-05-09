@@ -72,7 +72,7 @@ int readRecords(const char* filename, address_memo& awal, address_memo& akhir) {
             awal = newNode;
         } else {
             current->next = newNode;
-            // newNode->prev = current;
+            newNode->prev = current;
         }
         current = newNode;
         akhir = current;
