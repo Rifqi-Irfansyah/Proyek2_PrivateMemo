@@ -90,5 +90,7 @@ long int cd(long int x)
         k = k + t;
         if (k % x == 0)
             return (k / x);
-    }
 }
+}
+
+ghehheda{}
