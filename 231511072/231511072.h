@@ -21,9 +21,9 @@ typedef struct Memo {
 
 } ElmtList;
 
-int countDataMemo(); //menghitung jumlah data memo yang terdapat dalam file
+// int countDataMemo(); //menghitung jumlah data memo yang terdapat dalam file
 int readRecords(const char* filename, address_memo& awal, address_memo& akhir);
-
+ 
 #include "231511072.cpp"
 
 #endif // MEMO_READER_H
