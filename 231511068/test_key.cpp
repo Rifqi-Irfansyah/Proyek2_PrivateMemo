@@ -26,39 +26,6 @@ int prime(long int pr)
     }
     return 1;
 }
-int main()
-{
-    cout << "\nENTER FIRST PRIME NUMBER\n";
-    cin >> p;
-    flag = prime(p);
-    if (flag == 0)
-    {
-        cout << "\nWRONG INPUT\n";
-        exit(1);
-    }
-    cout << "\nENTER ANOTHER PRIME NUMBER\n";
-    cin >> q;
-    flag = prime(q);
-    if (flag == 0 || p == q)
-    {
-        cout << "\nWRONG INPUT\n";
-        exit(1);
-    }
-    cout << "\nENTER MESSAGE\n";
-    fflush(stdin);
-    cin >> msg;
-    for (i = 0; msg[i] != '\0'; i++)
-        m[i] = msg[i];
-    n = p * q;
-    t = (p - 1) * (q - 1);
-    ce();
-    cout << "\nPOSSIBLE VALUES OF e AND d ARE\n";
-    for (i = 0; i < j - 1; i++)
-        cout << e[i] << "\t" << d[i] << "\n";
-    encrypt();
-    decrypt();
-    return 0;
-}
 void ce()
 {
     int k;
@@ -92,4 +59,6 @@ long int cd(long int x)
             return (k / x);
 }
 }
- int c;
+
+
+int c;
