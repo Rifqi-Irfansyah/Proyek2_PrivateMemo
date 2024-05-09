@@ -92,5 +92,3 @@ long int cd(long int x)
             return (k / x);
 }
 }
-
-ghehheda{}
