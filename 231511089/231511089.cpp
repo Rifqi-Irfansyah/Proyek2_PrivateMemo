@@ -1,76 +1,105 @@
-#include "../231511072/231511072.h"
-#include "../231511068/231511068.h"
 #include "231511089.h"
-#include <iostream>
-#include <ctime>
-#include <cstring>
-#include <fstream>
-using namespace std;
-
-
-int numMemo;
-Memo2* readMemo;
+#include "../231511095/231511095.h"
+#include "../231511072/231511072.h"
 
 void hapusFile() {
     remove("file_memo.txt");
 }
 
 void listMemo(){
-    int pilih_memo;
-    numMemo = countDataMemo() ;
-    Memo2* readMemo = readMemoFile();
-
-    if (readMemo != nullptr) {
-        cout << "==========================================================\n";
-        cout << "\t\tDaftar Nama Memo Saat Ini\n";
-        cout << "==========================================================\n";
-
-        for (int i=0; i < numMemo; i++) {
-            cout << i+1 << ". Nama   : " << readMemo[i].namaMemo << endl;
-            cout << "   Dibuat : " << ctime(&readMemo[i].tanggal) << endl;
-        }
-        cout << "----------------------------------------------------------\n";
-        cout << "Silahkan Pilih Memo Yang akan dibaca \033[3matau kembali : '0'\033[0m  = ";
-        cin >> pilih_memo;
-        if (pilih_memo == 0){
-            system("cls");
-        }
-        else{
-            bukaMemo(pilih_memo, readMemo);
-        }
-    } else {
-        cerr << "Gagal membaca data Memo" << endl;
-    }
-
-    delete[] readMemo;
-}
-
-void bukaMemo(int pilih_memo, const Memo2* readMemo){
+    address_memo awal, akhir, hasil_search;
+    int pilih_memo, pilih_aksi;
     char kembali;
 
-    if ((pilih_memo > 0) && (pilih_memo <= numMemo)){
-        int key = 17;
-        char pw_encrypt[50];
-        strcpy(pw_encrypt, readMemo[pilih_memo - 1].password);
-        string pw_decrpyt = decrypt(pw_encrypt, key);
-        bool cekpw = cekPassword(pw_decrpyt);
+    readRecords("memo_coba.dat", awal, akhir);
 
-        if (cekpw == 1){
-            ofstream myfile;
-            myfile.open("file_memo.txt");
-            myfile<<"-------------------------------------------"<<endl;
-            myfile<<" Nama Memo\t: "<<readMemo[pilih_memo - 1].namaMemo <<endl;
-            myfile<<" Tanggal Dibuat\t: "<<ctime(&readMemo[pilih_memo - 1].tanggal);
-            myfile<<"-------------------------------------------"<<endl;
-            myfile<<readMemo[pilih_memo - 1].isiMemo<<endl;
+    address_memo node = awal;
+    cout << "travers ke kanman";
+    while(node->next != NULL){
+        cout << node->id_memo <<endl;
+        node = node->next;
+    }
 
-            system("start notepad file_memo.txt");
-            atexit(hapusFile);
-        }
+    cout << "travers ke kiri";
+    while(node != NULL){
+        cout << node->id_memo;
+        node = node->prev;
+    }
+
+    cout << "==========================================================\n";
+    cout << "\t\tDaftar Nama Memo Saat Ini\n";
+    cout << "==========================================================\n";
+    showNode(awal);
+    
+    cout << "----------------------------------------------------------\n";
+    cout << "Silahkan Pilih Memo \033[3m atau kembali : '0'\033[0m  = ";
+    cin >> pilih_memo;
+    if (pilih_memo == 0){
+        system("cls");
     }
     else{
-        cout << "Maaf tidak ada data memo " << pilih_memo <<endl;
+        hasil_search = searchingNode(awal, pilih_memo);
+        if(hasil_search == NULL){
+            cout << "Maaf ID Memo tidak ada";
+        }
+        else{
+            cout << " 1. Buka Memo\n";
+            cout << " 2. Edit Memo\n";
+            cout << " 3. Hapus Memo\n";
+            cout << " Pilih Aksi Pada Memo ' " << hasil_search->namaMemo <<" ' = ";
+            cin >> pilih_aksi;
 
+            switch(pilih_aksi){
+                case 1:
+                    bukaMemo(hasil_search);
+                    break;
+                
+                case 2:
+                    cout << "";
+                    break;
+
+                case 3:
+                    removeNodeAnywhere(awal, akhir, hasil_search);
+                    saveRecords("memo_coba.dat", awal);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        cout << "Kembali (y)? ";
+        cin >> kembali;
+        if (kembali == 'y'){
+            system("cls");
+            listMemo();
+        }
+        else{
+            system("exit");
+        }
+    }
+
+}
+
+void bukaMemo(address_memo node){
+    char kembali;
+    int key = 17;
+    char pw_encrypt[50];
+    strcpy(pw_encrypt, node->password);
+    string pw_decrpyt = decrypt(pw_encrypt, key);
+    bool cekpw = cekPassword(pw_decrpyt);
+
+    if (cekpw == 1){
+        ofstream myfile;
+        myfile.open("file_memo.txt");
+        myfile<<"-------------------------------------------"<<endl;
+        myfile<<" Nama Memo\t: "<< node->namaMemo <<endl;
+        myfile<<" Tanggal Dibuat\t: "<<ctime(& node->tanggal);
+        myfile<<"-------------------------------------------"<<endl;
+        myfile<< node->isiMemo<<endl;
+
+        system("start notepad file_memo.txt");
+        atexit(hapusFile);
     }
 
     cout << "Kembali (y)? ";
@@ -87,7 +116,6 @@ void bukaMemo(int pilih_memo, const Memo2* readMemo){
 bool cekPassword(string pw){
     string password;
     char ulangi_pw;
-    char kembali;
     bool password_true;
 
     do{
@@ -109,4 +137,89 @@ bool cekPassword(string pw){
 
     system("cls");
     return password_true;
+}
+
+void showNode(address_memo awal){
+    if (awal == NULL){
+        printf ("\n\t\t !! List node kosong !!");
+    }
+    else{
+        address_memo node = awal;
+        // int i = 1;
+        while (node != NULL) {
+            cout << "Id Memo   = " << node -> id_memo <<endl;
+            cout << "Nama Memo = " << node -> namaMemo <<endl;
+            cout << "Tgl Memo  = " << ctime( &node -> tanggal) <<endl<<endl;
+            node = node->next;
+        }
+    }
+    
+}
+
+bool removeNodeFirst(address_memo &awal){
+    if (awal == NULL){
+        return false;
+    }
+    else{
+        address_memo temp;
+        temp = awal;
+        awal = awal -> next;
+        removeNode(temp);
+        return true;
+    }
+}
+
+bool removeNodeLast(address_memo &akhir){
+    if (akhir == NULL){
+        return false;
+    }
+    else{
+        address_memo temp = akhir;
+        cout << akhir->namaMemo<<"1";
+        cin>> akhir->namaMemo;
+        akhir = akhir -> prev;
+        cout << akhir->namaMemo<<"2";
+        cin >> akhir->namaMemo;
+        akhir -> next = nullptr;
+        removeNode(temp);
+        return true;
+    }
+}
+
+void removeNodeAnywhere(address_memo &awal, address_memo &akhir, address_memo &node){
+    if (node == awal){
+        removeNodeFirst(awal);
+    }
+    else if (node == akhir){
+        removeNodeLast(akhir);
+    }
+    else{
+        address_memo temp;
+        temp = node->prev;
+        temp -> next = node->next;
+        removeNode(node);
+    }
+}
+
+void removeNode(address_memo node){
+    if(node != NULL){
+        node = NULL;
+    }
+    free(node);
+}
+
+address_memo searchingNode(address_memo awal, int nilai){
+    address_memo result = NULL;
+    if (awal != NULL){
+        address_memo node = awal;
+
+        while (node != NULL){
+            if (node -> id_memo == nilai){
+                result = node;
+                break;
+            }
+            node = node -> next;
+        }
+    }
+    return result;
 }
