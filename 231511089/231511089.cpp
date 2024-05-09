@@ -9,6 +9,7 @@ void hapusFile() {
 void listMemo(){
     address_memo awal, akhir, hasil_search;
     int pilih_memo, pilih_aksi, readData;
+    bool cekpw;
 
     do{
         system("cls");
@@ -53,17 +54,25 @@ void listMemo(){
                             break;
 
                         case 3:
-                            removeNodeAnywhere(awal, akhir, hasil_search);
-                            saveRecords("memo_coba.dat", awal);
+                            cekpw = cekPassword(hasil_search);
+                            if (cekpw){
+                                removeNodeAnywhere(awal, akhir, hasil_search);
+                                saveRecords("memo_coba.dat", awal);
+                                cout << " Penghapusan Berhasil, Tekan Enter Untuk Kembali ";
+                                cin.ignore();
+                                cin.get();
+                            }
+                            else{
+                                cout << " Gagal Menghapus Memo, Tekan Enter Untuk Kembali ";
+                                cin.ignore();
+                                cin.get();
+                            }
                             break;
 
                         default:
                             break;
                     }
                 }
-                cout << "\nTekan Enter Untuk Refresh List";
-                cin.ignore();
-                cin.get();
             }
         }
 
@@ -71,11 +80,8 @@ void listMemo(){
 }
 
 void bukaMemo(address_memo node){
-    int key = 17;
-    char pw_encrypt[50];
-    strcpy(pw_encrypt, node->password);
-    string pw_decrpyt = decrypt(pw_encrypt, key);
-    bool cekpw = cekPassword(pw_decrpyt);
+    
+    bool cekpw = cekPassword(node);
 
     if (cekpw == 1){
         ofstream myfile;
@@ -91,19 +97,24 @@ void bukaMemo(address_memo node){
     }
 }
 
-bool cekPassword(string pw){
+bool cekPassword(address_memo node){
+    int key = 17;
+    char pw_encrypt[50];
     string password;
     char ulangi_pw;
     bool password_true;
+    
+    strcpy(pw_encrypt, node->password);
+    string pw_decrypt = decrypt(pw_encrypt, key);
 
     do{
         system("cls");
         ulangi_pw = 'n';
 
-        cout << "Masukkan password Memo = ";
+        cout << "Masukkan password Memo '" << node->namaMemo << "' = ";
         cin >> password;
 
-        if (password == pw){
+        if (password == pw_decrypt){
             password_true = true;
         }
         else{
@@ -123,7 +134,6 @@ void showNode(address_memo awal){
     }
     else{
         address_memo node = awal;
-        // int i = 1;
         while (node != NULL) {
             cout << "Id Memo   = " << node -> id_memo <<endl;
             cout << "Nama Memo = " << node -> namaMemo <<endl;
@@ -153,11 +163,7 @@ bool removeNodeLast(address_memo &akhir){
     }
     else{
         address_memo temp = akhir;
-        cout << akhir->namaMemo<<"1";
-        cin>> akhir->namaMemo;
         akhir = akhir -> prev;
-        cout << akhir->namaMemo<<"2";
-        cin >> akhir->namaMemo;
         akhir -> next = nullptr;
         removeNode(temp);
         return true;

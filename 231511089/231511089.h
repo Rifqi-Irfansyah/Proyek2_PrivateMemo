@@ -13,7 +13,7 @@ using namespace std;
 struct Memo;
 
 void listMemo();
-bool cekPassword(string pw);
+bool cekPassword(address_memo node);
 void hapusFile();
 void bukaMemo(address_memo node);
 void showNode(address_memo awal);

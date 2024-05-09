@@ -18,14 +18,14 @@ void menuBeranda(){
 
     do {
         system("cls");
-        cout << "===========================================\n";
-        cout << "\tAplikasi Private Memo\n";
-        cout << "===========================================\n";
-        cout << "1. Buat Memo Baru\n";
-        cout << "2. Lihat List Memo\n";
-        cout << "0. Keluar\n";
-        cout << "-------------------------------------------\n";
-        cout << "Silahkan Pilih = ";
+        cout << " ============================================\n";
+        cout << " |           Aplikasi Private Memo          |\n";
+        cout << " ============================================\n";
+        cout << " | 1. Buat Memo Baru                        |\n";
+        cout << " | 2. Lihat List Memo                       |\n";
+        cout << " | 0. Keluar                                |\n";
+        cout << " --------------------------------------------\n";
+        cout << " Silahkan Pilih = ";
         cin >> pilih;
         switch(pilih){
             case 1:
