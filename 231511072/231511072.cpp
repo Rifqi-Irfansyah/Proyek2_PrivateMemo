@@ -44,7 +44,7 @@
 // }
 int readRecords(const char* filename, address_memo& awal, address_memo& akhir) {
     ifstream inFile(filename, ios::binary);
-    if (!inFile) {
+    if (!inFile || inFile.peek() == EOF) {
         awal = nullptr;
         akhir = nullptr;
         // ofstream outFile(filename, std::ios::binary);
