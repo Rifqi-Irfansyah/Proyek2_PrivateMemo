@@ -10,5 +10,6 @@ using namespace std;
 // Function prototypes
 long int cd(long int x);
 char* decrypt(const char cipherText[], int key);
+nt key_dinamis(int key);
 #include "231511068.cpp"
 #endif
