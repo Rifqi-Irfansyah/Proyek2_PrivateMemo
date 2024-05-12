@@ -2,21 +2,27 @@
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
+// #include "231511068.h"
 using namespace std;
-const int MAX_ROWS = 10;
-const int MAX_COLS = 100;
 // Deklarasi fungsi
-int key_dinamis(int key);
+int proses_random(int random);
+int key_dinamis(int key, int random);
 long int cd(long int x);
 char* encrypt(const char plainText[], int key);
 char* decrypt(const char cipherText[], int key);
+const int MAX_ROWS = 10;
+const int MAX_COLS = 100;
+
 
 int main() {
     int choice;
     int key = 10; // Key default
+    int random = 1;
     int UI;
     do {
         cout << "\n=== Main Menu ===" << endl;
+        cout << "random = " << random << endl;
+        cout << "key = " << key << endl;
         cout << "1. Set Key" << endl;
         cout << "2. Encrypt Text" << endl;
         cout << "3. Decrypt Text" << endl;
@@ -27,7 +33,8 @@ int main() {
         switch (choice) {
             case 1: {
                 //  system("cls");
-                key = key_dinamis(key);
+                random = proses_random(random);
+                key = key_dinamis(key,random);
                 break;
             }
             case 2: {
@@ -123,7 +130,25 @@ int main() {
 
 // Implementasi fungsi-fungsi yang diperlukan
 
-int key_dinamis(int key) {
+int proses_random(int random)
+{
+    time_t now = time(0);
+    tm* wks = localtime(&now);
+    time_t current_time;
+    srand((unsigned)time(NULL));
+        for (int i = 1; i <= wks->tm_mday; i++) 
+    {
+        random = 1 + (rand() % 1001);
+        // Menambahkan Operasi tambahan dalam loop ini
+
+        cout <<"Jumlah Loop- "<< i <<"dengan hasil random = " <<random << endl;     
+    }
+    cout << random << endl;
+    return random;
+}
+
+
+int key_dinamis(int key,int random) {
     cout << "Enter key: ";
     cin >> key;
     if (key >= 999999999)
@@ -135,9 +160,9 @@ int key_dinamis(int key) {
     tm* wks = localtime(&now);
     time_t current_time;
     srand((unsigned)time(NULL));
-    for (int i = 1; i <= 10; i++) {
-        int random = 1 + (rand() % 27);
-        key = random - (key + wks->tm_mday);
+    for (int i = 0; i <= wks->tm_mon; i++) {
+        key = wks->tm_yday - (key + random);
+        // cout << "Kondisi random " << random << endl;
         if (key < 0) 
         {
             key = abs(key);
@@ -145,7 +170,6 @@ int key_dinamis(int key) {
         }
         cout << key << endl;
     }
-
     if (key >= 26)
         {   
             cout << "N" << endl;
@@ -166,6 +190,15 @@ int key_dinamis(int key) {
         key = abs(key);
         cout << "Kondisi key setelah tidak negatif = " << key << endl;
     }
+
+    // if (key == nilai ganjil)
+    // {
+    //     operasi konversi key menjadi angka baru
+    // }
+    // else
+    // {
+
+    // }
     return key;
 }
 

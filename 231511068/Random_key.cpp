@@ -2,9 +2,9 @@
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
+#include <math.h>
 using namespace std;
 
-long int cd();
 
 int key_dinamis(int key) {
     cout << "Enter key: ";
@@ -20,6 +20,7 @@ int key_dinamis(int key) {
     srand((unsigned)time(NULL));
     for (int i = 1; i <= 10; i++) {
         int random = 1 + (rand() % 27);
+        return random;
         key = random - (key + wks->tm_mday);
         if (key < 0) 
         {
@@ -52,36 +53,26 @@ int key_dinamis(int key) {
     return key;
 }
 
-long int cd(long int x)
-{
-    int t;
-    long int k = 1;
-    while (1)
-    {
-        k = k + t;
-        if (k % x == 0)
-            return (k / x);
-}
-}
- const int MAX_ROWS = 10;
- const int MAX_COLS = 100;
 
-char* encrypt(const char plainText[], int key) {
-    char* encryptedText = new char[MAX_ROWS * MAX_COLS];
-    int len = strlen(plainText);
+//  const int MAX_ROWS = 10;
+//  const int MAX_COLS = 100;
 
-    for (int i = 0; i < len; i++) {
-        if (isalpha(plainText[i])) {
-            char base = islower(plainText[i]) ? 'a' : 'A';
-            encryptedText[i] = (plainText[i] - base + key) % 26 + base;
-        } else {
-            encryptedText[i] = plainText[i];
-        }
-    }
-    encryptedText[len] = '\0';
+// char* encrypt(const char plainText[], int key) {
+//     char* encryptedText = new char[MAX_ROWS * MAX_COLS];
+//     int len = strlen(plainText);
 
-    return encryptedText;
-}
+//     for (int i = 0; i < len; i++) {
+//         if (isalpha(plainText[i])) {
+//             char base = islower(plainText[i]) ? 'a' : 'A';
+//             encryptedText[i] = (plainText[i] - base + key) % 26 + base;
+//         } else {
+//             encryptedText[i] = plainText[i];
+//         }
+//     }
+//     encryptedText[len] = '\0';
+
+//     return encryptedText;
+// }
 
 
 const int MAX_ROWS = 10;
@@ -104,4 +95,56 @@ char* decrypt(const char cipherText[], int key) {
     decryptedText[len] = '\0'; // Add null terminator
 
     return decryptedText;
+}
+
+long int p, q, n, t, flag, e[100], d[100], temp[100], j, m[100], en[100], i;
+char msg[100];
+int prime(long int);
+void ce();
+long int cd(long int);
+n = p * q;
+t = (p - 1) * (q - 1);
+int prime(long int pr)
+{
+    int i;
+    j = sqrt(pr);
+    for (i = 2; i <= j; i++)
+    {
+        if (pr % i == 0)
+            return 0;
+    }
+    return 1;
+}
+void ce()
+{
+    int k;
+    k = 0;
+    for (i = 2; i < t; i++)
+    {
+        if (t % i == 0)
+            continue;
+        flag = prime(i);
+        if (flag == 1 && i != p && i != q)
+        {
+            e[k] = i;
+            flag = cd(e[k]);
+            if (flag > 0)
+            {
+                d[k] = flag;
+                k++;
+            }
+            if (k == 99)
+                break;
+        }
+    }
+}
+long int cd(long int x)
+{
+    long int k = 1;
+    while (1)
+    {
+        k = k + t;
+        if (k % x == 0)
+            return (k / x);
+}
 }

@@ -15,6 +15,8 @@ void ce();
 long int cd(long int);
 void encrypt();
 void decrypt();
+n = p * q;
+t = (p - 1) * (q - 1);
 int prime(long int pr)
 {
     int i;
@@ -59,6 +61,7 @@ long int cd(long int x)
             return (k / x);
 }
 }
+
 
 
 int c;
