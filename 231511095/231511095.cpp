@@ -6,11 +6,11 @@
 #include <string>
 using namespace std;
 
-void saveRecords(const char* filename, address_memo awal) {
-    ofstream outFile(filename, std::ios::binary);
+bool saveRecords(const char* filename, address_memo awal) { // bool
+    ofstream outFile(filename, ios::binary);
     if (!outFile) {
         cerr << "Gagal membuka file!" << endl;
-        return;
+        return false;
     }
 
     address_memo current = awal;
@@ -23,6 +23,8 @@ void saveRecords(const char* filename, address_memo awal) {
         current = current->next;
     }
     outFile.close();
+
+    return true;
 }
 
 // modul inputMemo

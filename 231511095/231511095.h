@@ -26,7 +26,7 @@ using namespace std;
 
 void tambahMemo(const Memo& memo); // deklarasi modul tambahMemo
 void inputMemo(); // deklarasi modul inputMemo
-void saveRecords(const char* filename, address_memo awal);
+bool saveRecords(const char* filename, address_memo awal);
 
 #include "231511095.cpp"
 
