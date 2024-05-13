@@ -20,8 +20,8 @@ void listMemo(){
         cout << "==========================================================\n";
 
         if (readData == 0){
-            cout << " !! Saat ini tidak ada data Memo !! ";
-            cout << "\nTekan Enter Untuk Kembali Ke Beranda";
+            cout << "\n\t !! Saat ini tidak ada data Memo !! ";
+            cout << "\n\n\tTekan Enter Untuk Kembali Ke Beranda";
             cin.ignore();
             cin.get();
             pilih_memo = 0;
@@ -46,7 +46,24 @@ void listMemo(){
 
                     switch(pilih_aksi){
                         case 1:
-                            bukaMemo(hasil_search);
+                            cekpw = cekPassword(hasil_search);
+                            if (cekpw == 1){
+                                ofstream myfile;
+                                myfile.open("file_memo.txt");
+                                myfile<<"-------------------------------------------"<<endl;
+                                myfile<<" Nama Memo\t: "<< hasil_search->namaMemo <<endl;
+                                myfile<<" Tanggal Dibuat\t: "<<ctime(& hasil_search->tanggal);
+                                myfile<<"-------------------------------------------"<<endl;
+                                myfile<< hasil_search->isiMemo<<endl;
+
+                                system("start notepad file_memo.txt");
+                                atexit(hapusFile);
+                            }
+                            else{
+                                cout << "\n Gagal Membuka Memo, Tekan Enter Untuk Kembali ";
+                                cin.ignore();
+                                cin.get();
+                            }
                             break;
                         
                         case 2:
@@ -58,7 +75,7 @@ void listMemo(){
                             if (cekpw){
                                 removeNodeAnywhere(awal, akhir, hasil_search);
                                 saveRecords("memo_coba.dat", awal);
-                                cout << " Penghapusan Berhasil, Tekan Enter Untuk Kembali ";
+                                cout << "\n Penghapusan Berhasil, Tekan Enter Untuk Kembali ";
                                 cin.ignore();
                                 cin.get();
                             }
@@ -77,24 +94,6 @@ void listMemo(){
         }
 
     }while(pilih_memo != 0);
-}
-
-void bukaMemo(address_memo node){
-    
-    bool cekpw = cekPassword(node);
-
-    if (cekpw == 1){
-        ofstream myfile;
-        myfile.open("file_memo.txt");
-        myfile<<"-------------------------------------------"<<endl;
-        myfile<<" Nama Memo\t: "<< node->namaMemo <<endl;
-        myfile<<" Tanggal Dibuat\t: "<<ctime(& node->tanggal);
-        myfile<<"-------------------------------------------"<<endl;
-        myfile<< node->isiMemo<<endl;
-
-        system("start notepad file_memo.txt");
-        atexit(hapusFile);
-    }
 }
 
 bool cekPassword(address_memo node){

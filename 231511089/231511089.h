@@ -15,7 +15,6 @@ struct Memo;
 void listMemo();
 bool cekPassword(address_memo node);
 void hapusFile();
-void bukaMemo(address_memo node);
 void showNode(address_memo awal);
 
 address_memo searchingNode(address_memo awal, int nilai);
