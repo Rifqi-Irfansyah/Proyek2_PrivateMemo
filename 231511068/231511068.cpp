@@ -1,14 +1,32 @@
 #include <iostream>
 #include <cstring>
-#include <cstdlib>
+#include <cctype>
 #include <ctime>
 using namespace std;
 
-long int cd();
+const int MAX_COLS = 100;
 
-int key_dinamis(int key) {
-    cout << "Enter key: ";
-    cin >> key;
+int proses_random(int random)
+{
+    time_t now = time(0);
+    tm* wks = localtime(&now);
+    time_t current_time;
+    srand((unsigned)time(NULL));
+        for (int i = 1; i <= wks->tm_mday; i++) 
+    {
+        random = 1 + (rand() % 1001);
+        // Menambahkan Operasi tambahan dalam loop ini
+
+        // cout <<"Jumlah Loop- "<< i <<"dengan hasil random = " <<random << endl;     
+    }
+    cout << random << endl;
+    return random;
+}
+
+
+int key_dinamis(int key,int random) {
+    // cout << "Enter key: ";
+    // cin >> key;
     if (key >= 999999999)
     {
         cout << "Input gagal";
@@ -18,20 +36,19 @@ int key_dinamis(int key) {
     tm* wks = localtime(&now);
     time_t current_time;
     srand((unsigned)time(NULL));
-    for (int i = 1; i <= 10; i++) {
-        int random = 1 + (rand() % 27);
-        key = random - (key + wks->tm_mday);
+    for (int i = 0; i <= wks->tm_mon; i++) {
+        key = wks->tm_yday - (key + random);
+        // cout << "Kondisi random " << random << endl;
         if (key < 0) 
         {
             key = abs(key);
-            cout << "Kondisi key setelah tidak negatif = " << key << endl;
+            // cout << "Kondisi key setelah tidak negatif = " << key << endl;
         }
         cout << key << endl;
     }
-
     if (key >= 26)
         {   
-            cout << "N" << endl;
+            // cout << "N" << endl;
             int tampan = 1 + (rand() % 100);
             while (key > 26 || key < -26)
             {
@@ -41,7 +58,7 @@ int key_dinamis(int key) {
             if (key < 0) 
             {
                 key = abs(key);
-                cout << "Kondisi key setelah tidak negatif = " << key << endl;
+                // cout << "Kondisi key setelah tidak negatif = " << key << endl;
             }
         }
         
@@ -49,57 +66,187 @@ int key_dinamis(int key) {
         key = abs(key);
         cout << "Kondisi key setelah tidak negatif = " << key << endl;
     }
+
+    // if (key == nilai ganjil)
+    // {
+    //     operasi konversi key menjadi angka baru
+    // }
+    // else
+    // {
+
+    // }
     return key;
 }
 
-long int cd(long int x)
-{
-    int t;
-    long int k = 1;
-    while (1)
-    {
-        k = k + t;
-        if (k % x == 0)
-            return (k / x);
+
+
+struct Node {
+    char data;
+    Node* next;
+};
+
+// Fungsi untuk membuat node baru
+Node* createNode(char value) {
+    Node* newNode = new Node;
+    newNode->data = value;
+    newNode->next = nullptr;
+    return newNode;
 }
+
+// Fungsi untuk menambahkan elemen ke antrian
+void enqueue(Node*& front, Node*& rear, char value) {
+    Node* newNode = createNode(value);
+    if (rear == nullptr) {
+        front = rear = newNode;
+    } else {
+        rear->next = newNode;
+        rear = newNode;
+    }
 }
 
-// char* encrypt(const char plainText[], int key) {
-//     char* encryptedText = new char[MAX_ROWS * MAX_COLS];
-//     int len = strlen(plainText);
+// Fungsi untuk menghapus elemen dari antrian
+char dequeue(Node*& front, Node*& rear) {
+    if (front == nullptr) {
+        cerr << "Queue is empty" << endl;
+        return '\0';
+    }
+    Node* temp = front;
+    char value = front->data;
+    front = front->next;
+    if (front == nullptr) {
+        rear = nullptr;
+    }
+    delete temp;
+    return value;
+}
 
-//     for (int i = 0; i < len; i++) {
-//         if (isalpha(plainText[i])) {
-//             char base = islower(plainText[i]) ? 'a' : 'A';
-//             encryptedText[i] = (plainText[i] - base + key) % 26 + base;
-//         } else {
-//             encryptedText[i] = plainText[i];
-//         }
-//     }
-//     encryptedText[len] = '\0';
+// Fungsi untuk memeriksa apakah antrian kosong
+bool isEmpty(Node* front) {
+    return front == nullptr;
+}
 
-//     return encryptedText;
-// }
+// Fungsi enkripsi menggunakan antrian
+char* encrypt(const char plainText[], int key) {
+    Node* front = nullptr;
+    Node* rear = nullptr;
 
+    int len = strlen(plainText);
+    char* encryptedText = new char[len + 1]; // +1 untuk null terminator
 
-const int MAX_ROWS = 10;
-const int MAX_COLS = 100;
+    for (int i = 0; i < len; i++) {
+        if (isalpha(plainText[i])) {
+            char base = islower(plainText[i]) ? 'a' : 'A';
+            char encryptedChar = (plainText[i] - base + key) % 26 + base;
+            enqueue(front, rear, encryptedChar);
+        } else {
+            enqueue(front, rear, plainText[i]);
+        }
+    }
 
+    int index = 0;
+    while (!isEmpty(front)) {
+        encryptedText[index++] = dequeue(front, rear);
+    }
+    encryptedText[index] = '\0';
+
+    return encryptedText;
+}
+
+// Fungsi dekripsi menggunakan antrian
 char* decrypt(const char cipherText[], int key) {
-    char* decryptedText = new char[MAX_ROWS * MAX_COLS];
+    Node* front = nullptr;
+    Node* rear = nullptr;
+
     int len = strlen(cipherText);
+    char* decryptedText = new char[len + 1]; // +1 untuk null terminator
 
     for (int i = 0; i < len; i++) {
         if (isalpha(cipherText[i])) {
-            char base = islower(cipherText[i]) ? 'a' : 'A'; // ini merupakan operasi tenary dimana operasi ini seperti boolean namun lebih singkat dengan 
-            /* ketentuan (condition) ? value_if_true : value_if_false sehingga dalam baris ini menjelaskan bahwa ketika operasi true maka  nilai kecil akan
-            dimasukkan pada base */ 
-            decryptedText[i] = (cipherText[i] - base - key + 26) % 26 + base;
+            char base = islower(cipherText[i]) ? 'a' : 'A';
+            char decryptedChar = (cipherText[i] - base - key + 26) % 26 + base;
+            enqueue(front, rear, decryptedChar);
         } else {
-            decryptedText[i] = cipherText[i];
+            enqueue(front, rear, cipherText[i]);
         }
     }
-    decryptedText[len] = '\0'; // Add null terminator
+
+    int index = 0;
+    while (!isEmpty(front)) {
+        decryptedText[index++] = dequeue(front, rear);
+    }
+    decryptedText[index] = '\0';
 
     return decryptedText;
+}
+
+int main() {
+    char plainText[MAX_COLS];
+    int key;
+    int random = 1;
+    int pil;
+
+    do
+    {
+        cout << "\n=== Main menu===" << endl;
+        cout << "key = " << key << endl;
+        cout << "1. Menentukan KEY" << endl;
+        cout << "2. Encrypt text dan decrpt" << endl;
+        cout << "3. Exit" << endl;
+        cout <<"Masukkan pilihan = ";
+        cin >> pil;
+    
+    switch (pil)
+    {
+        case 1:
+        {
+            cout << "Masukkan Key = ";
+            cin >> key;
+            random = proses_random(random);
+            key = key_dinamis(key,random);
+        };
+        case 2:
+        {
+             char plainText[100];
+             
+                cout << "Enter text to encrypt: ";
+                cin.ignore(); // Clear input buffer
+                cin.getline(plainText, 100);
+                char* encryptedText = encrypt(plainText, key);
+                cout << "Encrypted Text: " << encrypt(plainText, key) << endl;
+                char* decryptedText = decrypt(encryptedText, key);
+                cout << "Teks Yang Sudah Di Dekrip: " << decryptedText << endl;
+                break; 
+        }
+        case 3:
+        {
+            cout << "Keluar dari program";
+            break;
+        }
+    }
+    } while (pil != 3);
+
+
+
+
+
+
+    // proses_random(random);
+    // cout << "Masukkan teks yang ingin dienkripsi: ";
+    // cin.getline(plainText, MAX_COLS);
+
+    // cout << "Masukkan kunci enkripsi: ";
+    // cin >> key;
+    // key_dinamis(key,random);
+    // cout << "P = " << key << endl;
+    // char* encryptedText = encrypt(plainText, key);
+    // cout << "Teks Yang Sudah Di Enkrip: " << encryptedText << endl;
+
+    
+    // char* decryptedText = decrypt(encryptedText, key);
+    // cout << "Teks Yang Sudah Di Dekrip: " << decryptedText << endl;
+
+    // delete[] encryptedText;
+    // delete[] decryptedText;
+
+    return 0;
 }
