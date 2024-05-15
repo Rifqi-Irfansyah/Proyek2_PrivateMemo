@@ -9,7 +9,7 @@ void hapusFile() {
 void listMemo(){
     address_memo awal, akhir, hasil_search;
     int pilih_memo, pilih_aksi, readData;
-    bool cekpw;
+    bool cekpw, cekSave;
 
     do{
         system("cls");
@@ -35,7 +35,8 @@ void listMemo(){
             if (pilih_memo != 0){
                 hasil_search = searchingNode(awal, pilih_memo);
                 if(hasil_search == NULL){
-                    cout << "Maaf ID Memo tidak ada";
+                    cout << "\nMaaf ID Memo tidak ada\n";
+                    system("pause");
                 }
                 else{
                     cout << "\n 1. Buka Memo\n";
@@ -60,9 +61,8 @@ void listMemo(){
                                 atexit(hapusFile);
                             }
                             else{
-                                cout << "\n Gagal Membuka Memo, Tekan Enter Untuk Kembali ";
-                                cin.ignore();
-                                cin.get();
+                                cout << "\n !! Password Salah, Gagal Membuka Memo !! \n";
+                                system("pause");
                             }
                             break;
                         
@@ -74,16 +74,18 @@ void listMemo(){
                             cekpw = cekPassword(hasil_search);
                             if (cekpw){
                                 removeNodeAnywhere(awal, akhir, hasil_search);
-                                saveRecords("memo_coba.dat", awal);
-                                cout << "\n Penghapusan Berhasil, Tekan Enter Untuk Kembali ";
-                                cin.ignore();
-                                cin.get();
+                                cekSave = saveRecords("memo_coba.dat", awal);
+                                if(cekSave){
+                                    cout << "\n Penghapusan Berhasil\n";
+                                }
+                                else{
+                                    cout << "\n !! Error Sistem, Gagal Menghapus Memo !!\n";
+                                }
                             }
                             else{
-                                cout << " Gagal Menghapus Memo, Tekan Enter Untuk Kembali ";
-                                cin.ignore();
-                                cin.get();
+                                cout << "\n !! Password Salah, Gagal Menghapus Memo !!\n";
                             }
+                            system("pause");
                             break;
 
                         default:
