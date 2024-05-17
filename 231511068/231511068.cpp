@@ -80,6 +80,67 @@ int key_dinamis(int key,int random) {
 
 
 
+int RSA_n (int key,int random)
+{
+    long int p, q, n, t, flag, e[100], d[100],j,i;
+    int k;
+    k = 0;
+    // int u;
+    // u = key.length();
+    int n;
+    int t;
+    n = key * random;
+        if (random >= 26)
+        {   
+            // cout << "N" << endl;
+            int tampan = 1 + (rand() % 100);
+            while (random > 26 || random < -26)
+            {
+                random = random - tampan;
+            }
+            cout << "Kondisi random = "  << random <<endl; 
+            if (random < 0) 
+            {
+                random = abs(random);
+                // cout << "Kondisi key setelah tidak negatif = " << key << endl;
+            }
+        }
+    t = (key - 1) * (random - 1);
+
+        for (i = 2; i < t; i++)
+        {
+            if (t % i == 0)
+                continue;
+            flag = prime(i);
+            if (flag == 1 && i != p && i != q)
+            {
+                e[k] = i;
+                flag = cd(e[k]);
+                if (flag > 0)
+                {
+                    d[k] = flag;
+                    k++;
+                }
+                if (k == 99)
+                    break;
+            }
+        }
+}
+
+int prime(long int pr)
+{
+    int i;
+    j = sqrt(pr);
+    for (i = 2; i <= j; i++)
+    {
+        if (pr % i == 0)
+            return 0;
+    }
+    return 1;
+}
+
+
+
 struct Node {
     char data;
     Node* next;
