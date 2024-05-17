@@ -2,6 +2,7 @@
 #include <cstring>
 #include <cctype>
 #include <ctime>
+#include <cmath>
 using namespace std;
 
 const int MAX_COLS = 100;
@@ -78,61 +79,67 @@ int key_dinamis(int key,int random) {
     return key;
 }
 
-
-
-int RSA_n (int key,int random)
-{
-    long int p, q, n, t, flag, e[100], d[100],j,i;
-    int k;
-    k = 0;
-    // int u;
-    // u = key.length();
-    int n;
-    int t;
+int RSA_n(int key, int random) {
+    cout << "l" << endl;
+    long int p, q, n, t, flag, j, i;
+    int k = 0;
     n = key * random;
-        if (random >= 26)
+    t = (key - 1) * (random - 1);
+    if (random >= 26) {
+        cout << "1" << endl;
+        int tampan = 1 + (rand() % 100);
+        while (random > 26 || random < -26) {
+            random = random - tampan;
+        }
+        if (random < 0) {
+            random = abs(random);
+        }
+    }
+    for (i = 2; i < t; i++) {
+        cout << "2" << endl;
+        if (t % i == 0) continue;
+        flag = prime(i);
+        cout << "i =" << i <<  endl;
+        cout << "flag sebelum (if flag == 1) =" << flag <<  endl;
+        if (flag == 1 && i != p && i != q) {
+            key = i;
+            cout << "3" << endl;
+            cout << "flag saat (if flag == 1) =" << flag <<  endl;
+            cout << "Key dalam proses =" << key <<  endl;
+            while (key <= 26) {
+                cout << "4" << endl;
+                k = k + t;
+                if (k % key == 0)
+                    key = k / flag;
+            cout << "proses Key =" << key <<  endl;
+            }
+            if (key == 26)
+                cout << "5" << endl;
+                break;
+        }
+    }
+        if (key >= 26)
         {   
             // cout << "N" << endl;
             int tampan = 1 + (rand() % 100);
-            while (random > 26 || random < -26)
+            while (key > 26 || key < -26)
             {
-                random = random - tampan;
+                key = key - tampan;
             }
-            cout << "Kondisi random = "  << random <<endl; 
-            if (random < 0) 
+            cout << "Kondisi key = "  << key <<endl; 
+            if (key < 0) 
             {
-                random = abs(random);
+                key = abs(key);
                 // cout << "Kondisi key setelah tidak negatif = " << key << endl;
             }
         }
-    t = (key - 1) * (random - 1);
-
-        for (i = 2; i < t; i++)
-        {
-            if (t % i == 0)
-                continue;
-            flag = prime(i);
-            if (flag == 1 && i != p && i != q)
-            {
-                e[k] = i;
-                flag = cd(e[k]);
-                if (flag > 0)
-                {
-                    d[k] = flag;
-                    k++;
-                }
-                if (k == 99)
-                    break;
-            }
-        }
+    return key;
 }
 
-int prime(long int pr)
-{
-    int i;
+int prime(long int pr) {
+    int i, j;
     j = sqrt(pr);
-    for (i = 2; i <= j; i++)
-    {
+    for (i = 2; i <= j; i++) {
         if (pr % i == 0)
             return 0;
     }
