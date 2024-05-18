@@ -163,7 +163,7 @@ int key_dinamis(int key,int random) {
 }
 
 int RSA_n(long int key,long int random) {
-    long int p, q, n, t, flag, j, i;
+    long int n, t, flag, j, i;
     time_t Tnow = time(0);
     tm* waktu = localtime(&Tnow);
     srand((unsigned)time(NULL));
@@ -178,7 +178,7 @@ int RSA_n(long int key,long int random) {
     cout << "\nR =" << random;
         if (t >= 100) {
         int tampan = 1 + (rand() % 100);
-        while (t > 50) {
+        while (t > 500) {
             t = t - tampan;
         }
         if (t < 0) {
