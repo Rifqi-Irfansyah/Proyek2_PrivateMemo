@@ -6,6 +6,89 @@
 using namespace std;
 
 const int MAX_COLS = 100;
+int proses_random(int random);
+int key_dinamis(int key, int random);
+int RSA_n(long int key,long int random);
+int prime(long int pr);
+// int main() {
+//     /*MAIN INI DIGUNAKAN UNTUK MELAKUKAN TEST Program saya*/
+//     long int Hasil,PR,KY;
+//     int choice;
+//     int random = 10; // default
+//     int key = 0;
+//     do {
+//         // Display the main menu
+//         cout << "Pengetesan proses Key dinamis (Alqan Nazra):\n";
+//         cout << "1. Proses Random\n";
+//         cout << "2. Key Dinamis\n";
+//         cout << "3. RSA_n test 3 modul\n";
+//         cout << "4. Exit\n";
+//         cout << "Pilihan : ";
+//         cin >> choice;
+
+//         switch (choice) {
+//             case 1:
+//                 cout << "Masukkan Nilai random: ";
+//                 cin >> random;
+//                 Hasil = proses_random(random);
+//                 cout << "Hasil dari Proses Random: " << Hasil << endl;
+//                 break;
+
+//             case 2:
+//                 cout << "Masukkan Key: ";
+//                 cin >> key;
+//                 Hasil = key_dinamis(key, random);
+//                 cout << "Hasil dari Key Dinamis: " << Hasil << endl;
+//                 break;
+
+//             case 3:
+//                 cout << "Masukkan Key: ";
+//                 cin >> key;
+//                 /*Program Full fungsi*/
+//                 PR = proses_random(random);
+//                 KY = key_dinamis(key, PR);
+//                 Hasil = RSA_n(KY, PR);
+//                 /*Hasil lebih dari perkiraan key yang dibuat bisa berjuta-juta bahka komputer saya error yang dimana bagus namun 
+//                 endingnya harus memenuhi range 1-26*/
+//                 /*Program Fungsi mematikan random*/
+//                 // KY = key_dinamis(key, PR);
+//                 // Hasil = RSA_n(KY, random);
+//                 /*Kasus yang dialami sama seperti saat random dijalankan yang berbeda yaitu loopnya memiliki kemungkinan dimana
+//                 hanya <10 proses loop ini dikarenakan systax random yang saya pakai ini memiliki batas yang lebih sedikit dibandingkan
+//                 dengan fungsi random */
+//                 /*Program Fungsi mematikan key)dinamis*/
+//                 // PR = proses_random(random);
+//                 // Hasil = RSA_n(key, PR);
+//                 /*Catatan Bila fungsi randomnya*/
+//                 /*Key yang akan dibuat akan sulit dihitung karena loop yang terjadi mengalami 
+//                 banyak sekali loop untuk dapat berhenti parameter if if (flag == 1 && i != p && i != q) harus dipenuhi
+//                 namun terkadang butuh banyak loop agar key ini dapat dipenuhi sehingga menyebabkan key yang sangat random 
+//                 walaupun akhirnya key yabg sudah didapatkan akan diubah menjadi positif dan diubah menjadi memenuhi 26  */
+//                 /*Program hanya menjalankan RSA namun melihat hasil 2 modul*/
+//                 // PR = proses_random(random);
+//                 // KY = key_dinamis(key, random);
+//                 // Hasil = RSA_n(key, random);
+//                 /*Bila fungsi random dan dinamis tidak dinyalakan ini dapat mengubah key namun terdapat kemungkina yang
+//                 lumayan besar dimana input key yang sama memiliki key yang sudah diproses sama juga yang dapat menyebabkan 
+//                 keamanan berkurang*/
+//                 cout << "Hasil dari Random: " << PR << endl;
+//                 cout << "Hasil dari keydinamis: " << KY << endl;
+//                 cout << "Hasil dari RSA_n: " << Hasil << endl;
+//                 break;
+
+//             case 4:
+//                 cout << "Test Aman." << endl;
+//                 break;
+
+//             default:
+//                 cout << "Udah ngantuk." << endl;
+//                 break;
+//         }
+//     } while (choice != 4);
+
+//     return 0;
+// }
+
 
 int proses_random(int random)
 {
@@ -79,14 +162,30 @@ int key_dinamis(int key,int random) {
     return key;
 }
 
-int RSA_n(int key, int random) {
-    cout << "l" << endl;
+int RSA_n(long int key,long int random) {
     long int p, q, n, t, flag, j, i;
-    int k = 0;
+    time_t Tnow = time(0);
+    tm* waktu = localtime(&Tnow);
+    srand((unsigned)time(NULL));
     n = key * random;
-    t = (key - 1) * (random - 1);
+    t = (key - 1) * (random - 1);// fungsi random diperlukan saat proses ini karena saat proses ini random memiliki key yang didefault maka proses tidak berjaland dengan baik
+    if (t < 0) 
+    {
+        t = abs(t);
+    }
+    cout << "\nt =" << t;
+    cout << "\nK =" << key;
+    cout << "\nR =" << random;
+        if (t >= 100) {
+        int tampan = 1 + (rand() % 100);
+        while (t > 50) {
+            t = t - tampan;
+        }
+        if (t < 0) {
+            t = abs(t);
+        }
+    }
     if (random >= 26) {
-        cout << "1" << endl;
         int tampan = 1 + (rand() % 100);
         while (random > 26 || random < -26) {
             random = random - tampan;
@@ -95,28 +194,26 @@ int RSA_n(int key, int random) {
             random = abs(random);
         }
     }
+    cout << "\nR =" << random << endl;
+    cout << "\nt =" << t << endl;
     for (i = 2; i < t; i++) {
-        cout << "2" << endl;
         if (t % i == 0) continue;
         flag = prime(i);
-        cout << "i =" << i <<  endl;
-        cout << "flag sebelum (if flag == 1) =" << flag <<  endl;
-        if (flag == 1 && i != p && i != q) {
+        if (flag == 1 && i != key && i != random ) {
             key = i;
-            cout << "3" << endl;
-            cout << "flag saat (if flag == 1) =" << flag <<  endl;
-            cout << "Key dalam proses =" << key <<  endl;
-            while (key <= 26) {
-                cout << "4" << endl;
-                k = k + t;
-                if (k % key == 0)
-                    key = k / flag;
-            cout << "proses Key =" << key <<  endl;
+            while (key >= waktu->tm_sec) {
+                n = n + t;
+                if (n % key == 0)
+                    key = n / flag;
             }
-            if (key == 26)
-                cout << "5" << endl;
+            if (key < 0) 
+            {
+            key = abs(key);
+            }
+            if (key >= 10000000)
                 break;
         }
+        cout << "\nkey =" << key;
     }
         if (key >= 26)
         {   
@@ -247,51 +344,51 @@ char* decrypt(const char cipherText[], int key) {
     return decryptedText;
 }
 
-int main() {
-    char plainText[MAX_COLS];
-    int key;
-    int random = 1;
-    int pil;
+// int main() {
+//     char plainText[MAX_COLS];
+//     int key;
+//     int random = 1;
+//     int pil;
 
-    do
-    {
-        cout << "\n=== Main menu===" << endl;
-        cout << "key = " << key << endl;
-        cout << "1. Menentukan KEY" << endl;
-        cout << "2. Encrypt text dan decrpt" << endl;
-        cout << "3. Exit" << endl;
-        cout <<"Masukkan pilihan = ";
-        cin >> pil;
+//     do
+//     {
+//         cout << "\n=== Main menu===" << endl;
+//         cout << "key = " << key << endl;
+//         cout << "1. Menentukan KEY" << endl;
+//         cout << "2. Encrypt text dan decrpt" << endl;
+//         cout << "3. Exit" << endl;
+//         cout <<"Masukkan pilihan = ";
+//         cin >> pil;
     
-    switch (pil)
-    {
-        case 1:
-        {
-            cout << "Masukkan Key = ";
-            cin >> key;
-            random = proses_random(random);
-            key = key_dinamis(key,random);
-        };
-        case 2:
-        {
-             char plainText[100];
+//     switch (pil)
+//     {
+//         case 1:
+//         {
+//             cout << "Masukkan Key = ";
+//             cin >> key;
+//             random = proses_random(random);
+//             key = key_dinamis(key,random);
+//         };
+//         case 2:
+//         {
+//              char plainText[100];
              
-                cout << "Enter text to encrypt: ";
-                cin.ignore(); // Clear input buffer
-                cin.getline(plainText, 100);
-                char* encryptedText = encrypt(plainText, key);
-                cout << "Encrypted Text: " << encrypt(plainText, key) << endl;
-                char* decryptedText = decrypt(encryptedText, key);
-                cout << "Teks Yang Sudah Di Dekrip: " << decryptedText << endl;
-                break; 
-        }
-        case 3:
-        {
-            cout << "Keluar dari program";
-            break;
-        }
-    }
-    } while (pil != 3);
+//                 cout << "Enter text to encrypt: ";
+//                 cin.ignore(); // Clear input buffer
+//                 cin.getline(plainText, 100);
+//                 char* encryptedText = encrypt(plainText, key);
+//                 cout << "Encrypted Text: " << encrypt(plainText, key) << endl;
+//                 char* decryptedText = decrypt(encryptedText, key);
+//                 cout << "Teks Yang Sudah Di Dekrip: " << decryptedText << endl;
+//                 break; 
+//         }
+//         case 3:
+//         {
+//             cout << "Keluar dari program";
+//             break;
+//         }
+//     }
+//     } while (pil != 3);
 
 
 
@@ -316,5 +413,5 @@ int main() {
     // delete[] encryptedText;
     // delete[] decryptedText;
 
-    return 0;
-}
+//     return 0;
+// }
