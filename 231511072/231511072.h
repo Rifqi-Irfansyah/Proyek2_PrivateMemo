@@ -9,6 +9,7 @@ using namespace std;
 typedef struct Memo *address_memo;
 typedef struct Memo {
     int id_memo; //var untuk menyimpan id memo
+    int key; // var untuk menyimpan key memo
     char namaMemo[30]; // subvar namaMemo bertipe char dengan length 30
     char isiMemo[300]; // subvar isiMemo bertipe char dengan length 300
     char password[50]; // subvar password bertipe char dengan length 50

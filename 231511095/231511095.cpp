@@ -16,6 +16,7 @@ bool saveRecords(const char* filename, address_memo awal) { // bool
     address_memo current = awal;
     while (current != nullptr) {
         outFile.write(reinterpret_cast<char*>(&current->id_memo), sizeof(int));
+        outFile.write(reinterpret_cast<char*>(&current->key), sizeof(int));
         outFile.write(reinterpret_cast<char*>(&current->namaMemo), sizeof(char[30]));
         outFile.write(reinterpret_cast<char*>(&current->isiMemo), sizeof(char[300]));
         outFile.write(reinterpret_cast<char*>(&current->password), sizeof(char[50]));
@@ -46,12 +47,14 @@ void inputMemo() {
         cin.getline(newNode -> namaMemo, 30); // dilakukan input untuk Nama Memo
         cout << "Isi Memo: ";
         cin.getline(newNode -> isiMemo, 300); // dilakukan input untuk Isian Memo
+
         cout << "Masukkan Password: ";
         cin.getline(password, 50); // menginputkan password
         
-        int key = 17;
+        int key = 1;
         string pw_encrpyt = encrypt(password, key); // dilakukan enkripsi password dengan memanggil function encrypt di 231511073.h
         strcpy(newNode -> password, pw_encrpyt.c_str());
+        newNode -> key = key;
 
         newNode -> tanggal = time(nullptr);
         newNode -> next = NULL;

@@ -9,10 +9,11 @@
 using namespace std;
 int prima(long int);
 void ce();
-char* encrypt(const char plainText[], int key);
+char* encrypt(const char plainText[], int &key);
 
 #define MAX_SIZE 50
 
+#include "../231511068/231511068.h" // buat manggil key random
 #include "231511073.cpp"
 
 

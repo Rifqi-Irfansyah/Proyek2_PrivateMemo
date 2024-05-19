@@ -21,7 +21,7 @@ void listMemo(){
 
         if (readData == 0){
             cout << "\n\t !! Saat ini tidak ada data Memo !! ";
-            cout << "\n\n\tTekan Enter Untuk Kembali Ke Beranda";
+            cout << "\n\n\t Tekan Enter Untuk Kembali Ke Beranda";
             cin.ignore();
             cin.get();
             pilih_memo = 0;
@@ -35,7 +35,7 @@ void listMemo(){
             if (pilih_memo != 0){
                 hasil_search = searchingNode(awal, pilih_memo);
                 if(hasil_search == NULL){
-                    cout << "\nMaaf ID Memo tidak ada\n";
+                    cout << "\n Maaf ID Memo tidak ada\n";
                     system("pause");
                 }
                 else{
@@ -99,14 +99,13 @@ void listMemo(){
 }
 
 bool cekPassword(address_memo node){
-    int key = 17;
     char pw_encrypt[50];
     string password;
     char ulangi_pw;
     bool password_true;
     
     strcpy(pw_encrypt, node->password);
-    string pw_decrypt = decrypt(pw_encrypt, key);
+    string pw_decrypt = decrypt(pw_encrypt, node->key);
 
     do{
         system("cls");

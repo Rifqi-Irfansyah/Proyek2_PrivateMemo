@@ -9,7 +9,7 @@
 // #include "test.cpp"
 // #include "Random_key.cpp"
 
-#define MAX_SIZE 50
+// #define MAX_SIZE 50
 using namespace std;
 typedef struct node *adden;
 typedef struct node
@@ -18,10 +18,7 @@ typedef struct node
     adden next;
 }ode;
 
-struct Node {
-    char data;
-    Node* next;
-};
+
 // Function prototypes
 int proses_random(int random);
 /*Pada Modul ini nilai random yang dibuat akan diolah dengan nomber yang tidak diketahui*/

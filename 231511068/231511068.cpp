@@ -5,7 +5,6 @@
 #include <cmath>
 using namespace std;
 
-const int MAX_COLS = 100;
 int proses_random(int random);
 int key_dinamis(int key, int random);
 int RSA_n(long int key,long int random);
@@ -94,7 +93,6 @@ int proses_random(int random)
 {
     time_t now = time(0);
     tm* wks = localtime(&now);
-    time_t current_time;
     srand((unsigned)time(NULL));
         for (int i = 1; i <= wks->tm_mday; i++) 
     {
@@ -118,7 +116,6 @@ int key_dinamis(int key,int random) {
     }
     time_t now = time(0);
     tm* wks = localtime(&now);
-    time_t current_time;
     srand((unsigned)time(NULL));
     for (int i = 0; i <= wks->tm_mon; i++) {
         key = wks->tm_yday - (key + random);
@@ -163,7 +160,7 @@ int key_dinamis(int key,int random) {
 }
 
 int RSA_n(long int key,long int random) {
-    long int n, t, flag, j, i;
+    long int n, t, flag, i;
     time_t Tnow = time(0);
     tm* waktu = localtime(&Tnow);
     srand((unsigned)time(NULL));
@@ -290,32 +287,33 @@ bool isEmpty(Node* front) {
     return front == nullptr;
 }
 
+
 // Fungsi enkripsi menggunakan antrian
-char* encrypt(const char plainText[], int key) {
-    Node* front = nullptr;
-    Node* rear = nullptr;
+// char* encrypt(const char plainText[], int key) {
+//     Node* front = nullptr;
+//     Node* rear = nullptr;
 
-    int len = strlen(plainText);
-    char* encryptedText = new char[len + 1]; // +1 untuk null terminator
+//     int len = strlen(plainText);
+//     char* encryptedText = new char[len + 1]; // +1 untuk null terminator
 
-    for (int i = 0; i < len; i++) {
-        if (isalpha(plainText[i])) {
-            char base = islower(plainText[i]) ? 'a' : 'A';
-            char encryptedChar = (plainText[i] - base + key) % 26 + base;
-            enqueue(front, rear, encryptedChar);
-        } else {
-            enqueue(front, rear, plainText[i]);
-        }
-    }
+//     for (int i = 0; i < len; i++) {
+//         if (isalpha(plainText[i])) {
+//             char base = islower(plainText[i]) ? 'a' : 'A';
+//             char encryptedChar = (plainText[i] - base + key) % 26 + base;
+//             enqueue(front, rear, encryptedChar);
+//         } else {
+//             enqueue(front, rear, plainText[i]);
+//         }
+//     }
 
-    int index = 0;
-    while (!isEmpty(front)) {
-        encryptedText[index++] = dequeue(front, rear);
-    }
-    encryptedText[index] = '\0';
+//     int index = 0;
+//     while (!isEmpty(front)) {
+//         encryptedText[index++] = dequeue(front, rear);
+//     }
+//     encryptedText[index] = '\0';
 
-    return encryptedText;
-}
+//     return encryptedText;
+// }
 
 // Fungsi dekripsi menggunakan antrian
 char* decrypt(const char cipherText[], int key) {
@@ -343,6 +341,24 @@ char* decrypt(const char cipherText[], int key) {
 
     return decryptedText;
 }
+
+// int main() {
+//     char plainText[20];
+//     int key;
+
+//     cout << "Masukkan Nama-mu : ";
+//     cin.getline(plainText, 20);
+
+//     cout << "Masukkan Usia-mu : ";
+//     cin >> key;
+
+//     char* decryptText = decrypt(plainText, key);
+//     cout << "\nTeks Ter-enkrip : " << decryptText << endl;
+
+//     delete[] decryptText;
+
+//     return 0;
+// }
 
 // int main() {
 //     char plainText[MAX_COLS];

@@ -5,15 +5,15 @@
 using namespace std;
 const int MAX_COLS = 100;
 
-struct Node {
+struct Node2 {
     char data;
-    Node* next;
+    Node2* next;
 };
 
 class Queue {
     private:
-        Node* front;
-        Node* rear;
+        Node2* front;
+        Node2* rear;
     public:
         Queue() : front(nullptr), rear(nullptr) {}
         ~Queue() {
@@ -27,7 +27,7 @@ class Queue {
         }
 
         void enqueue(char value) {
-            Node* newNode = new Node;
+            Node2* newNode = new Node2;
             newNode->data = value;
             newNode->next = nullptr;
 
@@ -45,7 +45,7 @@ class Queue {
                 return '\0';
             }
 
-            Node* temp = front;
+            Node2* temp = front;
             char value = front->data;
             front = front->next;
             delete temp;
@@ -56,11 +56,15 @@ class Queue {
         }
 };
 
-char* encrypt(const char plainText[], int key) {
+char* encrypt(const char plainText[], int &key) {
+    int random = 1;
     Queue queue;
 
     int len = strlen(plainText);
     char* encryptedText = new char[len + 1]; // +1 untuk null terminator
+
+    random = proses_random(random);
+    key = key_dinamis(key,random);
 
     for (int i = 0; i < len; i++) {
         if (plainText[i] == ' ') {
@@ -83,23 +87,23 @@ char* encrypt(const char plainText[], int key) {
     return encryptedText;
 }
 
-int main() {
-    char plainText[MAX_COLS];
-    int key;
+// int main() {
+//     char plainText[MAX_COLS];
+//     int key;
 
-    cout << "Masukkan Nama-mu : ";
-    cin.getline(plainText, MAX_COLS);
+//     cout << "Masukkan Nama-mu : ";
+//     cin.getline(plainText, MAX_COLS);
 
-    cout << "Masukkan Usia-mu : ";
-    cin >> key;
+//     cout << "Masukkan Usia-mu : ";
+//     cin >> key;
 
-    char* encryptedText = encrypt(plainText, key);
-    cout << "\nTeks Ter-enkrip : " << encryptedText << endl;
+//     char* encryptedText = encrypt(plainText, key);
+//     cout << "\nTeks Ter-enkrip : " << encryptedText << endl;
 
-    delete[] encryptedText;
+//     delete[] encryptedText;
 
-    return 0;
-}
+//     return 0;
+// }
 
 
 // kodingan kedua
