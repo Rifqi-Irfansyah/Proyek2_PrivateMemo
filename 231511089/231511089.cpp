@@ -151,6 +151,9 @@ bool removeNodeFirst(address_memo &awal){
     else{
         address_memo temp = awal;
         awal = awal -> next;
+        if(awal != NULL){
+            awal -> prev = NULL;
+        }
         removeNode(temp);
         return true;
     }
@@ -163,7 +166,9 @@ bool removeNodeLast(address_memo &akhir){
     else{
         address_memo temp = akhir;
         akhir = akhir -> prev;
-        akhir -> next = nullptr;
+        if(akhir != NULL){
+            akhir -> next = NULL;
+        }
         removeNode(temp);
         return true;
     }
