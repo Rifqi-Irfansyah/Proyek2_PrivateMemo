@@ -149,9 +149,9 @@ bool removeNodeFirst(address_memo &awal){
         return false;
     }
     else{
-        address_memo temp;
-        temp = awal;
+        address_memo temp = awal;
         awal = awal -> next;
+        awal -> prev = nullptr;
         removeNode(temp);
         return true;
     }
