@@ -87,6 +87,8 @@ char* encrypt(const char plainText[], int &key) {
     return encryptedText;
 }
 
+// Menghapus int main
+
 // int main() {
 //     char plainText[MAX_COLS];
 //     int key;
