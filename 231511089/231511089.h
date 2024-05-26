@@ -20,8 +20,8 @@ void showNode(address_memo awal);
 address_memo searchingNode(address_memo awal, int nilai);
 bool removeNodeFirst(address_memo &awal);
 bool removeNodeLast(address_memo &akhir);
-void removeNodeAnywhere(address_memo &awal, address_memo &akhir, address_memo &node);
-void removeNode(address_memo node);
+bool removeNodeAnywhere(address_memo &awal, address_memo &akhir, address_memo &node);
+bool removeNode(address_memo node);
 
 #include "231511089.cpp"
 
