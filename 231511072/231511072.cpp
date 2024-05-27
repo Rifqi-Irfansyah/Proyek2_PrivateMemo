@@ -5,7 +5,7 @@
 
 int readRecords(const char* filename, address_memo& awal, address_memo& akhir) {
     ifstream inFile(filename, ios::binary);
-    if (!inFile) {
+    if (!inFile || inFile.peek() == EOF) {
         awal = nullptr;
         akhir = nullptr;
         // ofstream outFile(filename, std::ios::binary);
@@ -23,6 +23,7 @@ int readRecords(const char* filename, address_memo& awal, address_memo& akhir) {
 
         // Read data from file into the new Memo object
         inFile.read(reinterpret_cast<char*>(&newNode->id_memo), sizeof(int));
+        inFile.read(reinterpret_cast<char*>(&newNode->key), sizeof(int));
         inFile.read(reinterpret_cast<char*>(&newNode->namaMemo), sizeof(char[30]));
         inFile.read(reinterpret_cast<char*>(&newNode->isiMemo), sizeof(char[300]));
         inFile.read(reinterpret_cast<char*>(&newNode->password), sizeof(char[50]));
@@ -33,7 +34,7 @@ int readRecords(const char* filename, address_memo& awal, address_memo& akhir) {
             awal = newNode;
         } else {
             current->next = newNode;
-            // newNode->prev = current;
+            newNode->prev = current;
         }
         current = newNode;
         akhir = current;

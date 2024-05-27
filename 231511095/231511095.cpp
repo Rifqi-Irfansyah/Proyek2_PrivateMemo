@@ -1,40 +1,73 @@
 #include "231511095.h"
+// #include "../231511089/231511089.h"
 #include "../231511073/231511073.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 using namespace std;
 
-// modul tambahMemo
-void tambahMemo(const Memo &memo) {
-    ofstream file("Memos.dat", ios::out | ios::binary | ios::app);
-    if (!file) {
+bool saveRecords(const char* filename, address_memo awal) { // bool
+    ofstream outFile(filename, ios::binary);
+    if (!outFile) {
         cerr << "Gagal membuka file!" << endl;
-        return;
+        return false;
     }
-    file.write(reinterpret_cast<const char*>(&memo), sizeof(Memo));
-    // ditulis ke dalam file dalam bentuk biner dengan melakukan alokasi file terlebih dulu
-    file.close();
-    // file ditutup
+
+    address_memo current = awal;
+    while (current != nullptr) {
+        outFile.write(reinterpret_cast<char*>(&current->id_memo), sizeof(int));
+        outFile.write(reinterpret_cast<char*>(&current->key), sizeof(int));
+        outFile.write(reinterpret_cast<char*>(&current->namaMemo), sizeof(char[30]));
+        outFile.write(reinterpret_cast<char*>(&current->isiMemo), sizeof(char[300]));
+        outFile.write(reinterpret_cast<char*>(&current->password), sizeof(char[50]));
+        outFile.write(reinterpret_cast<char*>(&current->tanggal), sizeof(time_t));
+        current = current->next;
+    }
+    outFile.close();
+
+    return true;
 }
 
-// modul inputMemo
 void inputMemo() {
-    Memo newMemo;
-    char password[50]; // deklarasi variabel password bertipe array of char dengan length 50
-    cout << "Nama Memo: ";
-    cin.ignore();
-    cin.getline(newMemo.namaMemo, 30); // dilakukan input untuk Nama Memo
-    cout << "Isi Memo: ";
-    cin.getline(newMemo.isiMemo, 300); // dilakukan input untuk Isian Memo
-    cout << "Masukkan Password: ";
-    cin.getline(password, 50); // menginputkan password
+    int id_memo;
+    address_memo awal, akhir, newNode;
     
-    int key = 17;
-    string pw_encrpyt = encrypt(password, key); // dilakukan enkripsi password dengan memanggil function encrypt di 231511073.h
-    strcpy(newMemo.password, pw_encrpyt.c_str());
+    id_memo = readRecords("memo_coba.dat", awal, akhir);
+    
+    newNode = (address_memo) malloc(sizeof (ElmtList));
+    if (newNode == NULL){
+        printf("Memori Full");
+    }
+    else{
+        newNode -> id_memo = id_memo + 1;
+        char password[50]; // deklarasi variabel password bertipe array of char dengan length 50
+        cout << "Nama Memo: ";
+        cin.ignore();
+        cin.getline(newNode -> namaMemo, 30); // dilakukan input untuk Nama Memo
+        cout << "Isi Memo: ";
+        cin.getline(newNode -> isiMemo, 300); // dilakukan input untuk Isian Memo
 
-    newMemo.tanggal = time(nullptr);
+        cout << "Masukkan Password: ";
+        cin.getline(password, 50); // menginputkan password
+        
+        int key = 1;
+        string pw_encrpyt = encrypt(password, key); // dilakukan enkripsi password dengan memanggil function encrypt di 231511073.h
+        strcpy(newNode -> password, pw_encrpyt.c_str());
+        newNode -> key = key;
 
-    tambahMemo(newMemo);
+        newNode -> tanggal = time(nullptr);
+        newNode -> next = NULL;
+        newNode -> prev = NULL;
+    }
+    
+    if ((awal == NULL) && (akhir == NULL)){
+        awal = newNode;
+    }
+    else{
+        newNode->prev = akhir;
+        akhir -> next = newNode;
+    }
+    akhir = newNode;
+
+    saveRecords("memo_coba.dat", awal);
 }
