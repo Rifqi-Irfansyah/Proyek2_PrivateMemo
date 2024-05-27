@@ -28,7 +28,6 @@ bool saveRecords(const char* filename, address_memo awal) { // bool
     return true;
 }
 
-// modul inputMemo
 void inputMemo() {
     int id_memo;
     address_memo awal, akhir, newNode;
