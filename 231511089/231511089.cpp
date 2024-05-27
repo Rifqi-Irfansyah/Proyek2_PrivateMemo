@@ -9,7 +9,7 @@ void hapusFile() {
 void listMemo(){
     address_memo awal, akhir, hasil_search;
     int pilih_memo, pilih_aksi, readData;
-    bool cekpw, cekSave;
+    bool cekpw, cekSave, cekDelete;
 
     do{
         system("cls");
@@ -73,9 +73,9 @@ void listMemo(){
                         case 3:
                             cekpw = cekPassword(hasil_search);
                             if (cekpw){
-                                removeNodeAnywhere(awal, akhir, hasil_search);
+                                cekDelete = removeNodeAnywhere(awal, akhir, hasil_search);
                                 cekSave = saveRecords("memo_coba.dat", awal);
-                                if(cekSave){
+                                if(cekDelete && cekSave){
                                     cout << "\n Penghapusan Berhasil\n";
                                 }
                                 else{
@@ -149,9 +149,11 @@ bool removeNodeFirst(address_memo &awal){
         return false;
     }
     else{
-        address_memo temp;
-        temp = awal;
+        address_memo temp = awal;
         awal = awal -> next;
+        if(awal != NULL){
+            awal -> prev = NULL;
+        }
         removeNode(temp);
         return true;
     }
@@ -164,32 +166,38 @@ bool removeNodeLast(address_memo &akhir){
     else{
         address_memo temp = akhir;
         akhir = akhir -> prev;
-        akhir -> next = nullptr;
+        if(akhir != NULL){
+            akhir -> next = NULL;
+        }
         removeNode(temp);
         return true;
     }
 }
 
-void removeNodeAnywhere(address_memo &awal, address_memo &akhir, address_memo &node){
+bool removeNodeAnywhere(address_memo &awal, address_memo &akhir, address_memo &node){
+    bool cekDelete;
     if (node == awal){
-        removeNodeFirst(awal);
+        cekDelete = removeNodeFirst(awal);
     }
     else if (node == akhir){
-        removeNodeLast(akhir);
+        cekDelete = removeNodeLast(akhir);
     }
     else{
         address_memo temp;
         temp = node->prev;
         temp -> next = node->next;
         removeNode(node);
+        cekDelete = true;
     }
+    return cekDelete;
 }
 
-void removeNode(address_memo node){
+bool removeNode(address_memo node){
     if(node != NULL){
         node = NULL;
     }
     free(node);
+    return true;
 }
 
 address_memo searchingNode(address_memo awal, int nilai){
